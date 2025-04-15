@@ -1,17 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, MenuItem, Menu } from "@mui/material";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, store } from "../store/store";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function Header() {
   const token = useSelector((state: RootState) => state.token.token);
   const role = useSelector((state: RootState) => state.role.role);
+  const cart = useSelector((state: RootState) => state.cart.cart);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-
+  const itemCount = cart?.cartItems?.length || 0;
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -69,7 +70,15 @@ function Header() {
             <MenuItem onClick={handleClose}>Değerlendirmelerim</MenuItem>
             <MenuItem onClick={handleClose}>Çıkış</MenuItem>
           </Menu>
-          <ShoppingCartIcon className="hover:cursor-pointer" />
+          <div className="relative w-10 h-10 flex items-center justify-center">
+            <ShoppingCartIcon className="w-6 h-6 text-gray-700 hover:cursor-pointer" />
+
+            {itemCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full shadow">
+                {itemCount}
+              </span>
+            )}
+          </div>
         </div>
       )}
     </div>

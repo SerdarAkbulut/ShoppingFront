@@ -7,7 +7,6 @@ import {
   QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
-import { RecoilRoot } from "recoil"; // RecoilRoot eklendi
 import { store } from "./store/store";
 import { setcart } from "./store/cart/cartSlice";
 import { setToken } from "./store/token/tokenSlice";

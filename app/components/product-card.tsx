@@ -1,14 +1,16 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { Image } from "primereact/image";
+import { useMutation } from "@tanstack/react-query";
+import request from "../api/client/request";
+import Link from "next/link";
 
 interface productCard {
+  productId: number;
   name: string;
   price: number;
   productImages?: productImages[];
@@ -17,7 +19,21 @@ interface productImages {
   imageUrl: string;
 }
 
-const ProductCard: React.FC<productCard> = ({ name, price, productImages }) => {
+const ProductCard: React.FC<productCard> = ({
+  name,
+  price,
+  productImages,
+  productId,
+}) => {
+  const { mutate } = useMutation({
+    mutationFn: ({
+      productId,
+      quantity,
+    }: {
+      productId: number;
+      quantity: number;
+    }) => request.Cart.addItem(productId, quantity),
+  });
   return (
     <div className="flex flex-col bg-white shadow-2xl rounded-2xl p-5 h-full">
       <div className="border-b border-gray-200">
@@ -41,7 +57,9 @@ const ProductCard: React.FC<productCard> = ({ name, price, productImages }) => {
           ))}
         </Swiper>
       </div>
-      <div className="flex mt-4">{name}</div>
+      <Link href={`/products/product/${productId}`} className="flex mt-4">
+        {name}
+      </Link>
       <div className="mt-4 flex justify-between">
         <div>{price} ₺</div>
         <button
@@ -53,6 +71,7 @@ const ProductCard: React.FC<productCard> = ({ name, price, productImages }) => {
             transition-all duration-500 ease-in-out
             "
           color="inherit"
+          onClick={() => mutate({ productId, quantity: 1 })}
         >
           Sepete Ekle
         </button>

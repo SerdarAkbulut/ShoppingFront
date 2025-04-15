@@ -15,6 +15,7 @@ function ProductsPage() {
         {data?.map((item: any, index: any) => (
           <div key={item.id + index}>
             <ProductCard
+              productId={item.id}
               name={item?.name}
               price={item?.price}
               productImages={item.images}
