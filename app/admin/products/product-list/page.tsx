@@ -5,7 +5,7 @@ import request from "@/app/api/client/request";
 import { Button } from "@mui/material";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import "primereact/resources/themes/lara-light-cyan/theme.css";
+
 import EditProduct from "../edit-product/edit-product";
 
 function AdminProductList() {

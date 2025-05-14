@@ -2,7 +2,14 @@ export interface CartItem {
   productId: number;
   name: string;
   price: number;
-  imageUrl: string;
+  color: {
+    id: number;
+    name: string;
+  };
+  size: {
+    id: number;
+    name: string;
+  };
   quantity: number;
 }
 

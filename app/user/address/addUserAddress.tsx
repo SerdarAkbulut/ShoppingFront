@@ -1,0 +1,194 @@
+"use client";
+import request from "@/app/api/client/request";
+import { Button, Dialog, TextField } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import { useFormik } from "formik";
+import React, { useState } from "react";
+import * as Yup from "yup";
+import { MuiTelInput } from "mui-tel-input";
+
+interface SimpleDialogProps {
+  open: boolean;
+  onClose: () => void;
+}
+function AddUserAdress({ open, onClose }: SimpleDialogProps) {
+  const { mutate } = useMutation({
+    mutationFn: (values: any) => request.Address.addAddress(values),
+    onSuccess: () => {
+      onClose();
+    },
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      sehir: "",
+      ilce: "",
+      sokak: "",
+      cadde: "",
+      fullAddress: "",
+      adSoyad: "",
+      phone: "",
+      apartmanNo: "",
+      daireNo: "",
+    },
+    validationSchema: Yup.object({
+      sehir: Yup.string().required("Şehir zorunludur"),
+      ilce: Yup.string().required("İlçe zorunludur"),
+      sokak: Yup.string().required("Sokak zorunludur"),
+      cadde: Yup.string().required("Cadde zorunludur"),
+      adSoyad: Yup.string().required("Ad Soyad zorunludur"),
+      phone: Yup.string().required("Telefon zorunludur"),
+      apartmanNo: Yup.string().required("Apartman No zorunludur"),
+      daireNo: Yup.string().required("Daire No zorunludur"),
+      fullAddress: Yup.string().required("Açık adresi giriniz"),
+    }),
+
+    onSubmit: (values) => {
+      mutate(values);
+    },
+  });
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <div className=" h-full  flex justify-center items-center p-20  ">
+        <form
+          className="grid grid-cols-2 gap-5 "
+          onSubmit={formik.handleSubmit}
+        >
+          <div className="flex flex-col">
+            <TextField
+              name="adSoyad"
+              variant="outlined"
+              type="text"
+              label="Alıcı Ad Soyad"
+              value={formik.values.adSoyad}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.adSoyad && formik.errors.adSoyad && (
+              <span className="text-red-600">{formik.errors.adSoyad}</span>
+            )}
+          </div>
+          <div className="flex flex-col">
+            <MuiTelInput
+              name="phone"
+              variant="outlined"
+              label="Alıcı Telefon"
+              defaultCountry="TR"
+              value={formik.values.phone}
+              onBlur={formik.handleBlur}
+              onChange={(value) => formik.setFieldValue("phone", value)}
+            />
+            {formik.touched.phone && formik.errors.phone && (
+              <span className="text-red-600">{formik.errors.phone}</span>
+            )}
+          </div>
+          <div className="flex flex-col">
+            <TextField
+              name="sehir"
+              variant="outlined"
+              type="text"
+              label="Şehir"
+              value={formik.values.sehir}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.sehir && formik.errors.sehir && (
+              <span className="text-red-600">{formik.errors.sehir}</span>
+            )}
+          </div>
+
+          <div className="flex flex-col">
+            <TextField
+              name="ilce"
+              variant="outlined"
+              type="text"
+              label="İlçe"
+              value={formik.values.ilce}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.ilce && formik.errors.ilce && (
+              <span className="text-red-600">{formik.errors.ilce}</span>
+            )}
+          </div>
+
+          <div className="flex flex-col">
+            <TextField
+              name="sokak"
+              variant="outlined"
+              type="text"
+              label="Cadde"
+              value={formik.values.sokak}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.sokak && formik.errors.sokak && (
+              <span className="text-red-600">{formik.errors.sokak}</span>
+            )}
+          </div>
+          <div className="flex flex-col">
+            <TextField
+              name="cadde"
+              variant="outlined"
+              type="text"
+              label="Sokak"
+              value={formik.values.cadde}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.cadde && formik.errors.cadde && (
+              <span className="text-red-600">{formik.errors.cadde}</span>
+            )}
+          </div>
+          <div className="flex flex-col">
+            <TextField
+              name="apartmanNo"
+              variant="outlined"
+              type="text"
+              label="Apartman No"
+              value={formik.values.apartmanNo}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.apartmanNo && formik.errors.apartmanNo && (
+              <span className="text-red-600">{formik.errors.apartmanNo}</span>
+            )}
+          </div>
+          <div className="flex flex-col">
+            <TextField
+              name="daireNo"
+              variant="outlined"
+              type="text"
+              label="Daire No"
+              value={formik.values.daireNo}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.daireNo && formik.errors.daireNo && (
+              <span className="text-red-600">{formik.errors.daireNo}</span>
+            )}
+          </div>
+          <div className="flex flex-col col-span-2">
+            <TextField
+              name="fullAddress"
+              variant="outlined"
+              type="text"
+              value={formik.values.fullAddress}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              multiline
+            />
+            {formik.touched.fullAddress && formik.errors.fullAddress && (
+              <span className="text-red-600">{formik.errors.fullAddress}</span>
+            )}
+          </div>
+          <div className="col-start-2 flex justify-center">
+            <Button type="submit">Adres Ekle</Button>
+          </div>
+        </form>
+      </div>
+    </Dialog>
+  );
+}
+
+export default AddUserAdress;

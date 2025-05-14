@@ -17,12 +17,10 @@ const queryClient = new QueryClient();
 
 const CartFetcher: React.FC = () => {
   const dispatch = useDispatch();
-
   const { data: cart } = useQuery({
     queryKey: ["cart"],
     queryFn: request.Cart.get,
   });
-
   useEffect(() => {
     if (cart) {
       dispatch(setcart(cart));

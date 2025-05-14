@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, store } from "../store/store";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Link from "next/link";
 
 function Header() {
   const token = useSelector((state: RootState) => state.token.token);
@@ -12,7 +13,8 @@ function Header() {
   const cart = useSelector((state: RootState) => state.cart.cart);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const itemCount = cart?.cartItems?.length || 0;
+  const itemCount =
+    cart?.cartItems.reduce((total, item) => total + item.quantity, 0) || 0;
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -25,7 +27,7 @@ function Header() {
       <div>
         <Button
           LinkComponent={"a"}
-          href="/products"
+          href="/"
           className="!text-[#FFD700] !font-bold !bg-white !rounded-xl !border-2 !border-[#FFD700] hover:!bg-[#FFD700] hover:!text-white transition-all duration-500 ease-in-out"
         >
           famelinmodayazici
@@ -66,12 +68,16 @@ function Header() {
             }}
           >
             <MenuItem onClick={handleClose}>Ayarlar</MenuItem>
-            <MenuItem onClick={handleClose}>Geçmiş Siparişlerim</MenuItem>
+            <Link href="/user/gecmis-siparisler">
+              <MenuItem onClick={handleClose}>Geçmiş Siparişlerim</MenuItem>
+            </Link>
             <MenuItem onClick={handleClose}>Değerlendirmelerim</MenuItem>
             <MenuItem onClick={handleClose}>Çıkış</MenuItem>
           </Menu>
           <div className="relative w-10 h-10 flex items-center justify-center">
-            <ShoppingCartIcon className="w-6 h-6 text-gray-700 hover:cursor-pointer" />
+            <Link href="/checkoutPage">
+              <ShoppingCartIcon className="w-6 h-6 text-gray-700 hover:cursor-pointer" />
+            </Link>
 
             {itemCount > 0 && (
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full shadow">

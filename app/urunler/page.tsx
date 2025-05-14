@@ -1,17 +1,17 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import request from "../api/client/request";
 import ProductCard from "../components/product-card";
+import { getProducts } from "../hooks/products/useProducts";
+import { JsonLdProductList } from "../JsonLd/JsonLdProducts";
 
 function ProductsPage() {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["catalog"],
-    queryFn: () => request.Product.list(),
-  });
+  const { data, isLoading, isError, error } = getProducts();
+  if (isLoading) return <p>Yükleniyor...</p>;
+  if (isError) return <p>Hata: {error.message}</p>;
   return (
     <>
-      <div className=" grid grid-cols-4 gap-5 mt-5 mx-52">
+      <JsonLdProductList />
+      <div className=" grid grid-cols-5 gap-5 mt-5 mx-52">
         {data?.map((item: any, index: any) => (
           <div key={item.id + index}>
             <ProductCard

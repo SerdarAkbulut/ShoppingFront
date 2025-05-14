@@ -62,14 +62,27 @@ const Product = {
   update: (id: number, body: any) => queries.put(`products/${id}`, body),
   getVariant: () => queries.get("products/product-variant"),
   delete: (id: number) => queries.delete(`products/${id}`),
+  getByCategory: (categoryId: number, page: number) =>
+    queries.get(`products/category/${categoryId}/${page}`),
+  getLastProducts: () => queries.get("products/last"),
 };
 
 const Cart = {
   get: () => queries.get("cart"),
-  addItem: (productId: number, quantity = 1) =>
-    queries.post(`cart/add?productId=${productId}&quantity=${quantity}`, {}),
-  deleteItem: (productId: number, quantity = 1) =>
-    queries.delete(`cart?productId=${productId}&quantity=${quantity}`),
+  addItem: (
+    productId: number,
+    quantity: number,
+    colorId?: number,
+    sizeId?: number
+  ) =>
+    queries.post(
+      `cart/add?productId=${productId}&quantity=${quantity}&colorId=${colorId}&sizeId=${sizeId}`,
+      {}
+    ),
+  deleteItem: (productId: number, quantity: number) =>
+    queries.delete(
+      `cart/deleteItem?productId=${productId}&quantity=${quantity}`
+    ),
 };
 
 const User = {
@@ -81,10 +94,22 @@ const Category = {
   list: () => queries.get("category"),
 };
 
+const Address = {
+  addAddress: (values: any) => queries.post("address", values),
+  getAddress: () => queries.get("address"),
+};
+
+const Order = {
+  createOrder: (values: { adressId: number; orderItems: []; card: [] }) =>
+    queries.post("order", values),
+  getPrevOrders: () => queries.get("order/getorders"),
+};
 const request = {
   Product,
   Cart,
   User,
   Category,
+  Address,
+  Order,
 };
 export default request;
