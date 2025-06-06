@@ -7,16 +7,23 @@ import ProductFormComponent from "../component/productFormComponent";
 interface SimpleDialogProps {
   open: boolean;
   onClose: () => void;
-  product: ProductProps;
+  product?: ProductProps;
 }
 interface ProductProps {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  ProductCategories: { categoryId: number }[];
-  Images: { ImageUrl: string }[];
-  ProductVariants: { sizeId: number; colorId: number; stock: number }[];
+  product: {
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+    productCategories: { categoryId: number; id: number }[];
+    images: { imageUrl: string; id: number }[];
+    productVariants: {
+      sizeId: number;
+      colorId: number;
+      stock: number;
+      id: number;
+    }[];
+  };
 }
 
 function EditProduct({ open, onClose, product }: SimpleDialogProps) {

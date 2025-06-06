@@ -1,11 +1,14 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { Button, MenuItem, Menu } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState, store } from "../store/store";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Link from "next/link";
+import SearchProduct from "./search";
+import MenuIcon from "@mui/icons-material/Menu";
+import SideBar from "./sidebar";
 
 function Header() {
   const token = useSelector((state: RootState) => state.token.token);
@@ -13,6 +16,7 @@ function Header() {
   const cart = useSelector((state: RootState) => state.cart.cart);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [openSidebar, setOpenSidebar] = useState(false);
   const itemCount =
     cart?.cartItems.reduce((total, item) => total + item.quantity, 0) || 0;
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,9 +25,22 @@ function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const handleOut = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    setAnchorEl(null);
+  };
+  const toggleDrawer = (open: boolean) => () => {
+    setOpenSidebar(open);
+  };
   return (
     <div className="w-full bg-[#FFC0CB] p-7 flex justify-between">
+      <div className="lg:hidden block">
+        <a onClick={() => setOpenSidebar(!openSidebar)}>
+          <MenuIcon />
+        </a>
+      </div>
+      <SideBar open={openSidebar} toggleDrawer={toggleDrawer} />
       <div>
         <Button
           LinkComponent={"a"}
@@ -33,7 +50,9 @@ function Header() {
           famelinmodayazici
         </Button>
       </div>
-      <div>arama</div>
+      <div className="lg:block hidden">
+        <SearchProduct />
+      </div>
       {token === null ? (
         <div className="flex justify-end gap-4">
           <div>
@@ -72,7 +91,7 @@ function Header() {
               <MenuItem onClick={handleClose}>Geçmiş Siparişlerim</MenuItem>
             </Link>
             <MenuItem onClick={handleClose}>Değerlendirmelerim</MenuItem>
-            <MenuItem onClick={handleClose}>Çıkış</MenuItem>
+            <MenuItem onClick={handleOut}>Çıkış</MenuItem>
           </Menu>
           <div className="relative w-10 h-10 flex items-center justify-center">
             <Link href="/checkoutPage">

@@ -5,8 +5,7 @@ import ProductImage from "./productImage";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import request from "@/app/api/client/request";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store/store";
+
 import { updateCart } from "@/app/components/updateCart";
 import { toast } from "react-toastify";
 
@@ -47,16 +46,16 @@ export default function ProductDetailClient({ product }: { product: any }) {
     .filter((v: any) => v.color.id === selectedColorId)
     .map((v: any) => v.size);
   return (
-    <div className="px-4 py-8 bg-[#FFF8F0] mx-auto max-w-screen-lg rounded-lg shadow-lg mt-10">
+    <div className="px-4 py-8 bg-[#FFF8F0] mx-auto  rounded-lg shadow-lg mt-10 w-full md:w-3/4 xl:w-1/2 ">
       <h1 className="text-4xl font-semibold text-center text-black ">
         {product.name}
       </h1>
       <div className="flex flex-col md:flex-row justify-center items-center gap-8   mt-5">
-        <div className=" flex flex-col items-center ">
+        <div className=" flex flex-col items-center  ">
           <ProductImage images={product.images} />
-          <div className="w-full">
-            <div className="grid grid-cols-5 w-full mt-5 ">
-              <div className="flex w-full col-span-4  gap-4">
+          <div className=" ">
+            <div className="lg:grid lg:grid-cols-5    mt-5 ">
+              <div className="flex flex-col lg:flex-row w-full  col-span-4  gap-4">
                 <FormControl fullWidth>
                   <InputLabel>Renk</InputLabel>
                   <Select

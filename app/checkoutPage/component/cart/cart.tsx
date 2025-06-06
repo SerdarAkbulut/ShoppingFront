@@ -47,6 +47,7 @@ function CartPage() {
       setOrder({ orderProducts: cart?.cartItems, orderTotal: totalPrice })
     );
   }, [totalPrice]);
+
   return (
     <div className="flex w-full  items-center justify-center bg-gray-100">
       <div className="bg-white p-8  shadow-lg w-full max-w-2xl">

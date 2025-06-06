@@ -56,7 +56,7 @@ function ProductImage({ images }: productImages) {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-3/4 max-w-md mx-auto">
       <Swiper
         effect="flip"
         grabCursor={true}

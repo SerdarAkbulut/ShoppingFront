@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { debug } from "console";
 import { InputTextarea } from "primereact/inputtextarea";
 import React, { useEffect, useState } from "react";
 
@@ -35,7 +36,6 @@ interface ProductProps {
   };
   mode?: "edit" | "add";
 }
-
 function ProductFormComponent({ product, mode = "add" }: ProductProps) {
   const { data } = useQuery({
     queryKey: ["getVariant"],
@@ -54,7 +54,6 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
   const [imageUrls, setImageUrls] = useState<{ imageUrl: string }[]>(
     product?.images || []
   );
-
   useEffect(() => {
     if (product) {
       setProductName(product.name);
@@ -104,6 +103,22 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
     whiteSpace: "nowrap",
     width: 1,
   });
+
+  const formatToCurrency = (value: string | number) => {
+    const number =
+      typeof value === "string"
+        ? parseFloat(value.replace(/\./g, "").replace(",", "."))
+        : value;
+
+    if (isNaN(number)) return "";
+
+    return number.toLocaleString("tr-TR", {
+      style: "currency",
+      currency: "TRY",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
   return (
     <div className="w-full bg-white rounded-2xl shadow-md p-8">
       <Typography variant="h5" className="mb-6 font-semibold text-gray-800">
@@ -121,10 +136,9 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
 
         <TextField
           variant="standard"
-          type="number"
           label="Ürün Fiyatı"
-          value={price}
-          onChange={(e) => setPrice(Number(e.currentTarget.value))}
+          value={formatToCurrency(price)}
+          onChange={(e) => setPrice(e.currentTarget.value)}
           fullWidth
         />
 
@@ -160,7 +174,6 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
             ))}
           </Select>
         </FormControl>
-
         {productVariants?.map((variant, index) => (
           <div key={index} className="flex gap-5">
             <FormControl fullWidth variant="outlined">

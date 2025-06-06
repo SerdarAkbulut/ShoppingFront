@@ -31,17 +31,18 @@ export async function generateMetadata({
   };
 }
 
+debugger;
 export default async function ProductDetailPage({ params }: { params: any }) {
   const { slug } = await params;
   const [Id] = slug.split("-");
   const productId = Number(Id);
+  console.log(productId);
   if (isNaN(productId)) return notFound();
-
   const product = await getFetchProductDetails(productId);
   if (!product) return notFound();
 
   return (
-    <div>
+    <div className="flex justify-center">
       <ProductDetailClient product={product} />
     </div>
   );

@@ -17,11 +17,12 @@ function GetCatProducts({
   const router = useRouter();
 
   const handlePageChange = (page: number) => {
-    router.push(`/urunler/${catName}-${id}/sayfa/${page + 1}`);
+    router.push(`/urunler/${catName}-${id}/sayfa/${page}`);
   };
+
   return (
     <>
-      <div className=" grid grid-cols-4 gap-5 mt-5 mx-52">
+      <div className="grid grid-cols-1 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-5 mt-5 mx-8 2xl:mx-52 xl:mx-44 lg:mx-32 md:mx-24 sm:mx-16">
         {data?.map((item: any) => (
           <div key={item.id}>
             <ProductCard
@@ -34,8 +35,10 @@ function GetCatProducts({
         ))}
       </div>
       <div className="flex justify-center mt-5">
-        <Button>Geri</Button>
-        <Button onClick={() => handlePageChange(page)}>İleri</Button>
+        <Button onClick={() => handlePageChange(Math.max(1, page - 1))}>
+          Geri
+        </Button>
+        <Button onClick={() => handlePageChange(page + 1)}>İleri</Button>
       </div>
     </>
   );

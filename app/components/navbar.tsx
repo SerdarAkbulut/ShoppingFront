@@ -8,29 +8,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCategory } from "../store/categoy/categorySlice";
 import { RootState } from "../store/store";
 import { slugify } from "../utils/slugify";
+import { useCategories } from "../hooks/products/useProducts";
 
 function Navbar() {
   const router = useRouter();
   const dispatch = useDispatch();
   const category = useSelector((state: RootState) => state.category.category);
-  const { data } = useQuery({
-    queryKey: ["category"],
-    queryFn: () => request.Category.list(),
-  });
+  const { data, isLoading } = useCategories();
   const { mutate } = useMutation({
     mutationFn: ({ id, page }: { id: number; page: number }) =>
       request.Product.getByCategory(id, page),
   });
   const handleSelectCategory = (id?: number, catName?: string) => {
     if (id === undefined && catName === undefined) {
-      router.push("/urunler");
+      router.push(`/urunler?sayfa=${1}`);
     } else {
-      router.push(`/urunler/${slugify(catName)}-${id}/sayfa/${1}`);
+      router.push(`/urunler/${slugify(catName ?? "")}-${id}/sayfa/${1}`);
     }
   };
 
   return (
-    <div className="bg-amber-300 flex gap-5 justify-center p-3 shadow-sm">
+    <div className="bg-amber-300 lg:flex gap-5 justify-center p-3 shadow-sm  hidden">
       <Button
         variant="text"
         color="inherit"

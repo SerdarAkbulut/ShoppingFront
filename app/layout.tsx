@@ -5,6 +5,7 @@ import Header from "./components/header";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/navbar";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
+import Footer from "./components/footer";
 
 export const metadata: Metadata = {
   title: "famelinmodayazici",
@@ -18,13 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr" className="h-full">
-      <body>
+      <body className="flex flex-col min-h-screen">
         <ClientProviders>
-          <div className="">
-            <Header />
-            <Navbar></Navbar>
-          </div>
-          <div>{children}</div>
+          <Header />
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Footer />
         </ClientProviders>
         <ToastContainer
           position="bottom-right"

@@ -60,6 +60,7 @@ async function ProductCategory({ params }: { params: any }) {
   return (
     <>
       <JsonLdProductsByCategory props={{ catId: Id, page: sayfa }} />
+
       <GetCatProducts id={Id} page={Number(sayfa)} catName={name} />
     </>
   );

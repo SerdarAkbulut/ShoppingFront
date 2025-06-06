@@ -23,8 +23,8 @@ export default function Home() {
 
   return (
     <>
-      <div className=" h-72 flex justify-center">
-        <div className="w-2/4">
+      <div className=" h-96 flex justify-center">
+        <div className=" w-full 2xl:w-2/3 xl:w-3/4 lg:w-4/5 md:w-5/6  h-full">
           <MainSlider images={dummyProductImages} />
         </div>
       </div>

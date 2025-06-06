@@ -2,7 +2,6 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 
 axios.defaults.baseURL = "https://localhost:7277/api/";
 
-// Axios response interceptor
 axios.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
@@ -21,7 +20,6 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Helper function to set headers dynamically
 const getHeaders = (mediaType?: string) => {
   let headers = { "Content-Type": "application/json" };
 
@@ -56,7 +54,7 @@ const queries = {
 };
 
 const Product = {
-  list: () => queries.get("products"),
+  list: (page: number) => queries.get(`products?page=${page}`),
   details: (id: number) => queries.get(`products/${id}`),
   add: (body: any) => queries.post("products", body),
   update: (id: number, body: any) => queries.put(`products/${id}`, body),
@@ -65,6 +63,11 @@ const Product = {
   getByCategory: (categoryId: number, page: number) =>
     queries.get(`products/category/${categoryId}/${page}`),
   getLastProducts: () => queries.get("products/last"),
+  getBySearch: (searchTerm: string) =>
+    queries.get(`products/search?q=${searchTerm}`),
+  getProductsForAdmin: () => queries.get("products/admin-products"),
+  addBestSellers: (productId: number) =>
+    queries.post(`products/add-best-sellers/${productId}`, {}),
 };
 
 const Cart = {
@@ -103,7 +106,11 @@ const Order = {
   createOrder: (values: { adressId: number; orderItems: []; card: [] }) =>
     queries.post("order", values),
   getPrevOrders: () => queries.get("order/getorders"),
+  getInstallments: (values: { bin: string; price: string }) =>
+    queries.get(`order/installment-options/${values.bin}/${values.price}`),
+  getOrderDetails: (id: number) => queries.get(`order/${id}`),
 };
+
 const request = {
   Product,
   Cart,

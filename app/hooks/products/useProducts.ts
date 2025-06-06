@@ -1,10 +1,12 @@
 import request from "@/app/api/client/request";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
-export const getProducts = () => {
+export const getProducts = (page: number) => {
   return useQuery({
     queryKey: ["products"],
-    queryFn: () => request.Product.list(),
+    queryFn: () => request.Product.list(page),
+    staleTime: Infinity,
   });
 };
 
@@ -15,9 +17,7 @@ export async function getFetchProductDetails(id: number) {
     });
 
     if (!res.ok) return null;
-
     const product = await res.json();
-    console.log(product);
     return product;
   } catch (error) {
     console.error("fetchProduct error:", error);
@@ -58,3 +58,43 @@ export async function getFetchProductsByCategory(
     return null;
   }
 }
+
+export const useSearchProducts = (q: string) => {
+  return useQuery({
+    queryKey: ["searchProducts", q], // q'yu ekle
+    queryFn: () => request.Product.getBySearch(q),
+    enabled: Boolean(q),
+    staleTime: Infinity,
+  });
+};
+
+export const useCategories = () => {
+  return useQuery({
+    queryKey: ["category"],
+    queryFn: () => request.Category.list(),
+  });
+};
+
+export const getProductsForAdmin = () => {
+  return useQuery({
+    queryKey: ["adminProducts"],
+    queryFn: () => request.Product.getProductsForAdmin(),
+    staleTime: Infinity,
+  });
+};
+export const addBestSellers = () => {
+  return useMutation({
+    mutationFn: (productId: number) =>
+      request.Product.addBestSellers(productId),
+    onSuccess: () => {
+      toast.success("Başarıyla eklendi");
+    },
+  });
+};
+
+export const getInstallmentOptions = (bin: string, price: string) => {
+  return useQuery({
+    queryKey: ["installmentOptions", bin, price], // sorgunun benzersiz anahtarı
+    queryFn: () => request.Order.getInstallments({ bin, price }), // sorguyu yapan fonksiyon
+  });
+};

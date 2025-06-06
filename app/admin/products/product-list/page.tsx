@@ -7,12 +7,13 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 
 import EditProduct from "../edit-product/edit-product";
+import {
+  addBestSellers,
+  getProductsForAdmin,
+} from "@/app/hooks/products/useProducts";
 
 function AdminProductList() {
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["AdminProductList"],
-    queryFn: () => request.Product.list(),
-  });
+  const { data, refetch } = getProductsForAdmin();
   const { mutate } = useMutation({
     mutationFn: (id: number) => request.Product.delete(id),
     onSuccess: refetch,
@@ -86,6 +87,23 @@ function AdminProductList() {
     );
   };
 
+  const { mutate: bestSeller } = addBestSellers();
+
+  const renderAktif = (rowdata: any) => {
+    return (
+      <>
+        {rowdata.isActive ? (
+          <Button color="primary" onClick={() => bestSeller(rowdata.id)}>
+            Aktif
+          </Button>
+        ) : (
+          <Button color="error" onClick={() => bestSeller(rowdata.id)}>
+            Pasif
+          </Button>
+        )}
+      </>
+    );
+  };
   return (
     <>
       <DataTable
@@ -100,6 +118,7 @@ function AdminProductList() {
         <Column header="Renkler" body={renderColors} />
         <Column header="Kategoriler" body={renderCategories} />
         <Column header="Görseller" body={renderImages} />
+        <Column field="isActive" body={renderAktif} />
         <Column header="" body={renderEditButton} />
       </DataTable>
       <div className="w-full">
