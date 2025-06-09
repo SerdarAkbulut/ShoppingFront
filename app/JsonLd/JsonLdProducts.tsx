@@ -6,12 +6,12 @@ import {
 } from "../hooks/products/useProducts";
 import { slugify } from "../utils/slugify";
 
-export const JsonLdProductList = () => {
-  const { data } = getProducts();
+export const JsonLdProductList = (page: any) => {
+  const { data } = getProducts(page);
 
   if (!data || data.length === 0) return null;
 
-  const structuredData = data.map((product: any) => ({
+  const structuredData = data?.products?.map((product: any) => ({
     "@context": "https://schema.org/",
     "@type": "Product",
     name: product.name,
@@ -23,6 +23,16 @@ export const JsonLdProductList = () => {
       priceCurrency: "TRY",
       price: product.price,
       availability: "https://schema.org/InStock",
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+      },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+      },
+    },
+    brand: {
+      "@type": "Brand",
+      name: "Famelin",
     },
   }));
 
@@ -47,33 +57,36 @@ export const JsonLdProductsByCategory = ({
 
   if (!data || !data.length) return null;
 
-  const structuredData = data.map((product: any) => ({
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    name: product.name,
-    brand: {
-      "@type": "Brand",
-      name: "Famelin",
-    },
-    image: product.images?.map((item: any) => item.imageUrl.replace(/\s/g, "")),
-    description: product.description || "Açıklama bulunmamaktadır.",
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "TRY",
-      price: product.price,
-      availability: "https://schema.org/InStock",
-      url: `/urun/${product.id}-${slugify(product.name)}`,
-      seller: {
-        "@type": "Organization",
-        name: "Famelin Moda Yazıcı",
-        url: `https://www.famelimmodayazici.com/urun/${product.id}-${slugify(
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": data.map((product: any) => ({
+      "@type": "Product",
+      name: product.name,
+      brand: {
+        "@type": "Brand",
+        name: "Famelin",
+      },
+      image: product.images?.map((item: any) =>
+        item.imageUrl.replace(/\s/g, "")
+      ),
+      description: product.description || "Açıklama bulunmamaktadır.",
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "TRY",
+        price: product.price,
+        availability: "https://schema.org/InStock",
+        url: `https://www.famelinmodayazici.com/urun/${product.id}-${slugify(
           product.name
         )}`,
+        seller: {
+          "@type": "Organization",
+          name: "Famelin Moda Yazıcı",
+          url: "https://www.famelinmodayazici.com",
+        },
       },
-    },
-  }));
+    })),
+  };
 
-  // Script etiketi ile ekleniyor
   return (
     <script
       type="application/ld+json"

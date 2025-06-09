@@ -14,8 +14,10 @@ export async function generateMetadata({
   const parts = catName.split("-");
   const Id = parts.pop();
   const name = parts.join("-");
+  debugger;
+  const query = await getFetchProductsByCategory(Number(Id), Number(sayfa));
+  const products = query?.products;
 
-  const products = await getFetchProductsByCategory(Number(Id), Number(sayfa));
   if (!products || products.length === 0) return {};
 
   const firstProduct = products[0]; // Sadece ilk ürün baz alınır

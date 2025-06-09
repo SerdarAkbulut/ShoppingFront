@@ -24,9 +24,9 @@ function ProductsPage() {
 
   return (
     <>
-      <JsonLdProductList />
+      <JsonLdProductList page={page} />
       <div className="grid grid-cols-1 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-5 mt-5 mx-8 2xl:mx-52 xl:mx-44 lg:mx-32 md:mx-24 sm:mx-16">
-        {data?.map((item: any, index: any) => (
+        {data?.products.map((item: any, index: any) => (
           <div key={index}>
             <ProductCard
               productId={item.id}
@@ -45,7 +45,12 @@ function ProductsPage() {
           >
             Geri
           </Button>
-          <Button onClick={() => goToPage(page + 1)}>İleri</Button>
+          <Button
+            onClick={() => goToPage(page + 1)}
+            disabled={!data.hasNextPage}
+          >
+            İleri
+          </Button>
         </div>
       </div>
     </>

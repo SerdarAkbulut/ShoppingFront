@@ -37,7 +37,7 @@ function PrevOrders() {
   };
 
   return (
-    <div className="absolute top-20 left-0 right-0 bottom-0 flex justify-center items-center">
+    <div className=" mt-20 bottom-0 flex justify-center items-center">
       <div className="flex flex-col gap-5">
         <h1 className="font-bold text-2xl ml-2">Siparişlerim</h1>
         <DataTable value={data} paginator rows={5}>

@@ -28,6 +28,15 @@ export async function generateMetadata({
         (image: { imageUrl: string }) => image.imageUrl
       ),
     },
+    keywords: [
+      product.name,
+      product.description,
+      "Famelin",
+      "Famelin Ürünleri",
+      "Famelin Ürün Detayları",
+      "Famelin Ürün İncelemesi",
+      "Famelin Ürün Açıklaması",
+    ],
   };
 }
 
