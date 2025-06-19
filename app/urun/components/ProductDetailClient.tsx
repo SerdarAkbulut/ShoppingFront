@@ -8,6 +8,7 @@ import request from "@/app/api/client/request";
 
 import { updateCart } from "@/app/components/updateCart";
 import { toast } from "react-toastify";
+import { formatToCurrency } from "@/app/utils/slugify";
 
 export default function ProductDetailClient({ product }: { product: any }) {
   const [selectedColorId, setSelectedColorId] = useState("");
@@ -97,7 +98,7 @@ export default function ProductDetailClient({ product }: { product: any }) {
                 </FormControl>
               </div>
               <span className=" text-3xl font-bold   text-gray-900 text-center self-center">
-                {product.price} ₺
+                {formatToCurrency(product.price)}
               </span>
             </div>
             <p className="mt-4 text-gray-600 text-lg">{product.description}</p>

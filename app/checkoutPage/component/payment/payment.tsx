@@ -22,7 +22,7 @@ function Payment() {
   const [expiryDate, setExpiryDate] = useState("");
   const [cvc, setCvc] = useState("");
   const [expireMonth, expireYear] = expiryDate.split("/");
-  const [installment, setInstallment] = useState("");
+  const [installment, setInstallment] = useState("1");
   const bin = cardNumber.replace(/\s/g, "").substring(0, 6);
   const cart = useSelector((state: RootState) => state.cart.cart);
   const totalPrice = cart?.cartItems.reduce(
@@ -34,6 +34,9 @@ function Payment() {
     bin,
     totalPrice?.toString() || ""
   );
+  const handleChange = (event: SelectChangeEvent) => {
+    setInstallment(event.target.value as string);
+  };
   useEffect(() => {
     dispatch(
       setOrder({
@@ -43,15 +46,13 @@ function Payment() {
           expireYear,
           expireMonth,
           cvc,
-          installment,
+          installment: installment,
         },
       })
     );
-  }, [CardHolderName, cardNumber, expireYear, expireMonth, cvc]);
+  }, [CardHolderName, cardNumber, expireYear, expireMonth, cvc, installment]);
   console.log(installment);
-  const handleChange = (event: SelectChangeEvent) => {
-    setInstallment(event.target.value as string);
-  };
+
   return (
     <div className="flex justify-center">
       <form className="flex flex-col gap-10">
@@ -140,14 +141,36 @@ function Payment() {
                     >
                       {items.installmentPrices.map(
                         (item: any, index: number) => (
-                          <MenuItem value={item.installmentNumber} key={index}>
+                          <MenuItem
+                            value={item.installmentNumber.toString()}
+                            key={index}
+                          >
                             {item.installmentNumber === 1
                               ? "Tek Çekim"
-                              : item.installmentNumber}
+                              : `${
+                                  item.installmentNumber
+                                } Taksit - Aylık ${parseFloat(
+                                  item.InstallmentPrice
+                                ).toFixed(2)} TL`}
                           </MenuItem>
                         )
                       )}
                     </Select>
+
+                    {installment && (
+                      <div className="mt-2 text-sm text-gray-700">
+                        {items.installmentPrices.map((item: any) =>
+                          item.installmentNumber.toString() === installment ? (
+                            <div key={item.installmentNumber}>
+                              Toplam Ödenecek Tutar:{" "}
+                              <strong>
+                                {parseFloat(item.totalPrice).toFixed(2)} TL
+                              </strong>
+                            </div>
+                          ) : null
+                        )}
+                      </div>
+                    )}
                   </FormControl>
                 )}
               </div>

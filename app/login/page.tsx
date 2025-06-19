@@ -4,8 +4,15 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import request from "../api/client/request";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setToken } from "../store/token/tokenSlice";
+import { setRole } from "../store/role/roleSlice";
+import Router from "next/router";
 
 function LoginPage() {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const { mutate, isSuccess } = useMutation({
     mutationFn: (values: { email: string; password: string }) =>
       request.User.login(values),
@@ -13,6 +20,10 @@ function LoginPage() {
     onSuccess: (data) => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.user.role);
+      localStorage.setItem("userName", data.user.userName);
+      dispatch(setToken(data.token));
+      dispatch(setRole(data.user.role));
+      router.push("/");
     },
   });
 
@@ -34,7 +45,7 @@ function LoginPage() {
   });
 
   return (
-    <div className="flex w-full items-center justify-center h-screen mt-auto">
+    <div className="flex w-full items-center justify-center h-screen ">
       <div>
         <form
           onSubmit={formik.handleSubmit}
@@ -73,14 +84,21 @@ function LoginPage() {
               <div className="text-red-500">{formik.errors.password}</div>
             )}
           </div>
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white p-2 rounded hover:cursor-pointer"
+            >
+              Giriş Yap
+            </button>
 
-          <button
-            type="submit"
-            className="bg-blue-500 text-white p-2 rounded"
-            disabled={formik.isSubmitting}
-          >
-            {formik.isSubmitting ? "Giriş Yapılıyor..." : "Giriş Yap"}
-          </button>
+            <a
+              className="bg-red-500 text-white p-2 rounded hover:cursor-pointer"
+              onClick={() => router.push("/forgot-password")}
+            >
+              Şifremi Unuttum
+            </a>
+          </div>
         </form>
       </div>
     </div>

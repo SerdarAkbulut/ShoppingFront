@@ -28,15 +28,21 @@ function Navbar() {
   };
 
   return (
-    <div className="bg-amber-300 lg:flex gap-5 justify-center p-3 shadow-sm  hidden">
+    <div className=" lg:flex gap-5 justify-center p-3  hidden">
       <Button
         variant="text"
         color="inherit"
         className="flex gap-5 text-base"
         sx={{
-          ":hover": { backgroundColor: "#f0a51a" },
+          ":hover": { backgroundColor: "#FFD700" },
           textTransform: "none",
-          ...(category === "Tüm Ürünler" && { backgroundColor: "#f0a51a" }),
+          ...(category === "Tüm Ürünler"
+            ? {
+                border: "2px solid #FFD700",
+                color: "black",
+                borderRadius: "8px",
+              }
+            : {}),
         }}
         onClick={() => {
           handleSelectCategory();
@@ -52,9 +58,15 @@ function Navbar() {
             color="inherit"
             className="flex gap-5 text-base"
             sx={{
-              ":hover": { backgroundColor: "#f0a51a" },
+              ":hover": { backgroundColor: "#FFD700" },
               textTransform: "none",
-              ...(category === item.name && { backgroundColor: "#f0a51a" }),
+              ...(category === item.name
+                ? {
+                    border: "2px solid #FFD700",
+                    color: "black",
+                    borderRadius: "8px",
+                  }
+                : {}),
             }}
             key={item.id}
             onClick={() => {

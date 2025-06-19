@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ClientProviders from "./provaider";
-import Header from "./components/header";
 import { ToastContainer } from "react-toastify";
-import Navbar from "./components/navbar";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
-import Footer from "./components/footer";
+import ConditionalLayout from "./conditionalLayout";
+
+// client component'i buraya import et
 
 export const metadata: Metadata = {
   title: "famelinmodayazici",
@@ -20,12 +19,8 @@ export default function RootLayout({
   return (
     <html lang="tr" className="h-full">
       <body className="flex flex-col min-h-screen">
-        <ClientProviders>
-          <Header />
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </ClientProviders>
+        <ConditionalLayout>{children}</ConditionalLayout>
+
         <ToastContainer
           position="bottom-right"
           hideProgressBar

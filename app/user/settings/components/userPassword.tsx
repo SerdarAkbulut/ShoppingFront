@@ -1,0 +1,102 @@
+"use client";
+import { updateUserDetails } from "@/app/hooks/user/useUser";
+import { Button, TextField } from "@mui/material";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+
+function UserPassword() {
+  const { mutate, error, isError } = updateUserDetails();
+
+  const formik = useFormik({
+    initialValues: {
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+    validationSchema: Yup.object({
+      oldPassword: Yup.string().min(6, "En az 6 karakter olmalıdır."),
+      newPassword: Yup.string().min(6, "En az 6 karakter olmalıdır."),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref("newPassword")], "Şifreler eşleşmiyor")
+        .min(6, "En az 6 karakter olmalıdır."),
+    }),
+    onSubmit: (values) => {
+      mutate(values);
+    },
+  });
+  useEffect(() => {
+    if (isError && error?.response?.data?.errors) {
+      error.response.data.errors.forEach((err) => {
+        toast.error(err.message);
+      });
+    }
+  }, [isError, error]);
+  return (
+    <div className="flex justify-center">
+      <div className="mt-20">
+        <form>
+          <div>
+            <div className="flex flex-col mb-4">
+              <label id="sifre">Şu Anki Şifre</label>
+              <TextField
+                id="sifre"
+                type="password"
+                name="oldPassword"
+                onChange={formik.handleChange}
+                value={formik.values.oldPassword}
+                onBlur={formik.handleBlur}
+                placeholder="Şu Anki Şifre"
+              />
+              {formik.errors.oldPassword && formik.touched.oldPassword && (
+                <div>{formik.errors.oldPassword}</div>
+              )}
+            </div>
+            <div className="flex flex-col mb-4">
+              <label id="newPassword">Yeni Şifre</label>
+              <TextField
+                id="newPassword"
+                type="password"
+                name="newPassword"
+                onChange={formik.handleChange}
+                value={formik.values.newPassword}
+                onBlur={formik.handleBlur}
+                placeholder="Yeni Şifre"
+              />
+              {formik.errors.newPassword && formik.touched.newPassword && (
+                <div>{formik.errors.newPassword}</div>
+              )}
+            </div>
+            <div className="flex flex-col mb-4">
+              <label id="confirmPassword">Yeni Şifre Tekrar</label>
+              <TextField
+                id="confirmPassword"
+                type="password"
+                name="confirmPassword"
+                onChange={formik.handleChange}
+                value={formik.values.confirmPassword}
+                onBlur={formik.handleBlur}
+                placeholder="Yeni Şifre Tekrar"
+              />
+              {formik.errors.confirmPassword &&
+                formik.touched.confirmPassword && (
+                  <div>{formik.errors.confirmPassword}</div>
+                )}
+            </div>
+            <Button
+              fullWidth
+              color="primary"
+              variant="contained"
+              onClick={() => formik.handleSubmit()}
+            >
+              güncelle
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default UserPassword;

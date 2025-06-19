@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import request from "./api/client/request";
 import MainSlider from "./components/mainSlider";
 import LastProducts from "./components/lastProducts";
+import BestSeller from "./components/bestSeller";
 
 export default function Home() {
   const dummyProductImages = [
@@ -22,21 +23,21 @@ export default function Home() {
   ];
 
   return (
-    <>
-      <div className=" h-96 flex justify-center">
-        <div className=" w-full 2xl:w-2/3 xl:w-3/4 lg:w-4/5 md:w-5/6  h-full">
+    <div className="px-52">
+      <div className="flex justify-center ">
+        <div className="w-full h-[800px] ">
           <MainSlider images={dummyProductImages} />
         </div>
       </div>
-      <div className="mt-5 px-32">
+      <div className="mt-5 ">
         <h1 className="font-extrabold text-2xl ml-5">Yeni Ürünler</h1>
 
         <LastProducts></LastProducts>
         <div>
           <h1 className="font-extrabold text-2xl ml-5 mt-5">Sevilen Ürünler</h1>
-          <LastProducts></LastProducts>
+          <BestSeller />
         </div>
       </div>
-    </>
+    </div>
   );
 }

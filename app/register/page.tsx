@@ -68,7 +68,7 @@ const RegisterPage = () => {
         className="w-96 bg-gray-100 mt-64 p-12"
       >
         <div className="flex flex-col mb-4">
-          <label>Kullanıcı Adı:</label>
+          <label>Ad Soyad</label>
           <TextField
             type="text"
             name="userName"

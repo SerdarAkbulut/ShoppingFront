@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, MenuItem, Menu } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState, store } from "../store/store";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -9,6 +9,7 @@ import Link from "next/link";
 import SearchProduct from "./search";
 import MenuIcon from "@mui/icons-material/Menu";
 import SideBar from "./sidebar";
+import Navbar from "./navbar";
 
 function Header() {
   const token = useSelector((state: RootState) => state.token.token);
@@ -33,15 +34,16 @@ function Header() {
   const toggleDrawer = (open: boolean) => () => {
     setOpenSidebar(open);
   };
+
   return (
-    <div className="w-full bg-[#FFC0CB] p-7 flex justify-between">
+    <div className="w-full  px-52 py-5 flex justify-between">
       <div className="lg:hidden block">
         <a onClick={() => setOpenSidebar(!openSidebar)}>
           <MenuIcon />
         </a>
       </div>
       <SideBar open={openSidebar} toggleDrawer={toggleDrawer} />
-      <div>
+      <div className="flex self-center">
         <Button
           LinkComponent={"a"}
           href="/"
@@ -50,11 +52,12 @@ function Header() {
           famelinmodayazici
         </Button>
       </div>
-      <div className="lg:block hidden">
+      <Navbar />
+      <div className="lg:flex hidden  lg:self-center">
         <SearchProduct />
       </div>
       {token === null ? (
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-4 self-center">
           <div>
             <a href="/login">Giriş</a>
           </div>
@@ -63,9 +66,12 @@ function Header() {
           </div>
         </div>
       ) : role === "Admin" ? (
-        <div className="flex gap-5">
+        <div className="flex gap-5 self-center">
           <a href="/admin/products/add-product">Ürün Ekle</a>
           <a href="/admin/products/product-list">Ürünler</a>
+          <a onClick={handleOut} className="hover:cursor-pointer">
+            Çıkış
+          </a>
         </div>
       ) : (
         <div className="flex items-center gap-4">
@@ -86,7 +92,15 @@ function Header() {
               horizontal: "right",
             }}
           >
-            <MenuItem onClick={handleClose}>Ayarlar</MenuItem>
+            <div className="border-b-2 flex items-center justify-center ">
+              <span className="text-xl font-bold">
+                {localStorage.getItem("userName")}
+              </span>
+            </div>
+
+            <Link href="/user/settings">
+              <MenuItem onClick={handleClose}>Hesap Ayarları</MenuItem>
+            </Link>
             <Link href="/user/gecmis-siparisler">
               <MenuItem onClick={handleClose}>Geçmiş Siparişlerim</MenuItem>
             </Link>

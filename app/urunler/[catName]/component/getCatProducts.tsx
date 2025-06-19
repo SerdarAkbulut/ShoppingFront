@@ -30,15 +30,24 @@ function GetCatProducts({
               price={item.price}
               productId={item.id}
               productImages={item.images}
+              discount={item.discount}
             />
           </div>
         ))}
       </div>
       <div className="flex justify-center mt-5">
-        <Button onClick={() => handlePageChange(Math.max(1, page - 1))}>
+        <Button
+          onClick={() => handlePageChange(Math.max(1, page - 1))}
+          disabled={page === 1}
+        >
           Geri
         </Button>
-        <Button onClick={() => handlePageChange(page + 1)}>İleri</Button>
+        <Button
+          onClick={() => handlePageChange(page + 1)}
+          disabled={!data?.hasNextPage}
+        >
+          İleri
+        </Button>
       </div>
     </>
   );

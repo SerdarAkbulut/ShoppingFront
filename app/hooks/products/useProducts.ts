@@ -98,3 +98,26 @@ export const getInstallmentOptions = (bin: string, price: string) => {
     queryFn: () => request.Order.getInstallments({ bin, price }), // sorguyu yapan fonksiyon
   });
 };
+
+export const getBestSellers = () => {
+  return useQuery({
+    queryKey: ["bestSellers"],
+    queryFn: () => request.Product.getBestSellers(),
+    staleTime: Infinity,
+  });
+};
+
+export const addDiscount = () => {
+  return useMutation({
+    mutationFn: ({
+      productId,
+      discount,
+    }: {
+      productId: number;
+      discount: string;
+    }) => request.Product.addDiscount(productId, discount),
+    onSuccess: () => {
+      toast.success("İndirim başarıyla eklendi");
+    },
+  });
+};

@@ -14,3 +14,18 @@ export function slugify(str: string): string {
     .replace(/-+/g, "-") // birden fazla tire varsa teke indir
     .replace(/^-+|-+$/g, ""); // baştaki/sondaki tireleri kaldır
 }
+export const formatToCurrency = (value: string | number) => {
+  const number =
+    typeof value === "string"
+      ? parseFloat(value.replace(/\./g, "").replace(",", "."))
+      : value;
+
+  if (isNaN(number)) return "";
+
+  return number.toLocaleString("tr-TR", {
+    style: "currency",
+    currency: "TRY",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};

@@ -1,13 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { get } from "http";
 import React from "react";
-import request from "../api/client/request";
+import { getBestSellers } from "../hooks/products/useProducts";
 import ProductCard from "./product-card";
 
-function LastProducts() {
-  const { data } = useQuery({
-    queryKey: ["lastProducts"],
-    queryFn: () => request.Product.getLastProducts(),
-  });
+function BestSeller() {
+  const { data } = getBestSellers();
   return (
     <div className="grid grid-cols-5 gap-4 ">
       {data?.map((item: any) => (
@@ -24,4 +21,4 @@ function LastProducts() {
   );
 }
 
-export default LastProducts;
+export default BestSeller;

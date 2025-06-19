@@ -18,6 +18,8 @@ import { AxiosError } from "axios";
 import { debug } from "console";
 import { InputTextarea } from "primereact/inputtextarea";
 import React, { useEffect, useState } from "react";
+import Discount from "./discount";
+import { formatToCurrency } from "@/app/utils/slugify";
 
 interface ProductProps {
   product?: {
@@ -46,7 +48,7 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
     product?.productCategories || []
   );
   const [productName, setProductName] = useState(product?.name || "");
-  const [price, setPrice] = useState(product?.price || 0);
+  const [price, setPrice] = useState(product?.price || "");
   const [description, setDescription] = useState(product?.description || "");
   const [productVariants, setProductVariants] = useState<
     { sizeId: number; colorId: number; stock: number }[]
@@ -104,21 +106,6 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
     width: 1,
   });
 
-  const formatToCurrency = (value: string | number) => {
-    const number =
-      typeof value === "string"
-        ? parseFloat(value.replace(/\./g, "").replace(",", "."))
-        : value;
-
-    if (isNaN(number)) return "";
-
-    return number.toLocaleString("tr-TR", {
-      style: "currency",
-      currency: "TRY",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-  };
   return (
     <div className="w-full bg-white rounded-2xl shadow-md p-8">
       <Typography variant="h5" className="mb-6 font-semibold text-gray-800">
@@ -138,7 +125,7 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
           variant="standard"
           label="Ürün Fiyatı"
           value={formatToCurrency(price)}
-          onChange={(e) => setPrice(e.currentTarget.value)}
+          onChange={(e) => setPrice(e.target.value)}
           fullWidth
         />
 
@@ -303,26 +290,28 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
             </div>
           ))}
         </div>
-
-        <div className="flex justify-end">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              const payload = {
-                name: productName,
-                price,
-                productCategories: categoryName,
-                images: imageUrls,
-                description,
-                productVariants: productVariants,
-              };
-              mode === "edit" ? updateProduct(payload) : addProduct(payload);
-            }}
-          >
-            {mode === "edit" ? "Güncelle" : "Yeni Ürün Ekle"}
-          </Button>
-        </div>
+        {mode === "edit" && (
+          <div className="flex justify-between items-center mt-6">
+            <Discount productId={product?.id} />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                const payload = {
+                  name: productName,
+                  price,
+                  productCategories: categoryName,
+                  images: imageUrls,
+                  description,
+                  productVariants: productVariants,
+                };
+                mode === "edit" ? updateProduct(payload) : addProduct(payload);
+              }}
+            >
+              {mode === "edit" ? "Güncelle" : "Yeni Ürün Ekle"}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

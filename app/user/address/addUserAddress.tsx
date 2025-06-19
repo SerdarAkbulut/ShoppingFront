@@ -6,6 +6,9 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { MuiTelInput } from "mui-tel-input";
+import { InputMask } from "primereact/inputmask";
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 
 interface SimpleDialogProps {
   open: boolean;
@@ -55,11 +58,11 @@ function AddUserAdress({ open, onClose }: SimpleDialogProps) {
           onSubmit={formik.handleSubmit}
         >
           <div className="flex flex-col">
-            <TextField
+            <label htmlFor="adSoyad">Alıcı Ad Soyad</label>
+            <InputText
               name="adSoyad"
               variant="outlined"
               type="text"
-              label="Alıcı Ad Soyad"
               value={formik.values.adSoyad}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
@@ -69,25 +72,25 @@ function AddUserAdress({ open, onClose }: SimpleDialogProps) {
             )}
           </div>
           <div className="flex flex-col">
-            <MuiTelInput
+            <label htmlFor="phone">Alıcı Telefon</label>
+            <InputMask
               name="phone"
-              variant="outlined"
-              label="Alıcı Telefon"
-              defaultCountry="TR"
+              mask="(999) 999-9999"
               value={formik.values.phone}
               onBlur={formik.handleBlur}
-              onChange={(value) => formik.setFieldValue("phone", value)}
+              onChange={(e) => formik.setFieldValue("phone", e.value)}
             />
             {formik.touched.phone && formik.errors.phone && (
               <span className="text-red-600">{formik.errors.phone}</span>
             )}
           </div>
           <div className="flex flex-col">
-            <TextField
+            <label htmlFor="sehir">Şehir</label>
+
+            <InputText
               name="sehir"
               variant="outlined"
               type="text"
-              label="Şehir"
               value={formik.values.sehir}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
@@ -98,11 +101,12 @@ function AddUserAdress({ open, onClose }: SimpleDialogProps) {
           </div>
 
           <div className="flex flex-col">
-            <TextField
+            <label htmlFor="ilce">İlçe</label>
+
+            <InputText
               name="ilce"
               variant="outlined"
               type="text"
-              label="İlçe"
               value={formik.values.ilce}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
@@ -113,11 +117,11 @@ function AddUserAdress({ open, onClose }: SimpleDialogProps) {
           </div>
 
           <div className="flex flex-col">
-            <TextField
+            <label htmlFor="sokak">Sokak</label>
+            <InputText
               name="sokak"
               variant="outlined"
               type="text"
-              label="Cadde"
               value={formik.values.sokak}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
@@ -127,11 +131,11 @@ function AddUserAdress({ open, onClose }: SimpleDialogProps) {
             )}
           </div>
           <div className="flex flex-col">
-            <TextField
+            <label htmlFor="cadde">Cadde</label>
+            <InputText
               name="cadde"
               variant="outlined"
               type="text"
-              label="Sokak"
               value={formik.values.cadde}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
@@ -141,11 +145,11 @@ function AddUserAdress({ open, onClose }: SimpleDialogProps) {
             )}
           </div>
           <div className="flex flex-col">
-            <TextField
+            <label htmlFor="apartmanNo">Apartman No</label>
+            <InputText
               name="apartmanNo"
               variant="outlined"
               type="text"
-              label="Apartman No"
               value={formik.values.apartmanNo}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
@@ -155,11 +159,11 @@ function AddUserAdress({ open, onClose }: SimpleDialogProps) {
             )}
           </div>
           <div className="flex flex-col">
-            <TextField
+            <label htmlFor="daireNo">Daire No</label>
+            <InputText
               name="daireNo"
               variant="outlined"
               type="text"
-              label="Daire No"
               value={formik.values.daireNo}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
@@ -169,14 +173,13 @@ function AddUserAdress({ open, onClose }: SimpleDialogProps) {
             )}
           </div>
           <div className="flex flex-col col-span-2">
-            <TextField
+            <label htmlFor="fullAddress">Açık Adres</label>
+            <InputTextarea
               name="fullAddress"
               variant="outlined"
-              type="text"
               value={formik.values.fullAddress}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              multiline
             />
             {formik.touched.fullAddress && formik.errors.fullAddress && (
               <span className="text-red-600">{formik.errors.fullAddress}</span>

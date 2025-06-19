@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-axios.defaults.baseURL = "http://localhost:5034/api/";
+axios.defaults.baseURL = "https://localhost:7277/api/";
 
 axios.interceptors.response.use(
   (response) => response,
@@ -68,6 +68,11 @@ const Product = {
   getProductsForAdmin: () => queries.get("products/admin-products"),
   addBestSellers: (productId: number) =>
     queries.post(`products/add-best-sellers/${productId}`, {}),
+  getBestSellers: () => queries.get("products/home"),
+  addDiscount: (productId: number, discount: string) =>
+    queries.put(`products/add-discount/${productId}/${discount}`, {}),
+  deleteDiscount: (productId: number) =>
+    queries.delete(`products/delete-discount/${productId}`),
 };
 
 const Cart = {
@@ -91,6 +96,11 @@ const Cart = {
 const User = {
   login: (values: any) => queries.post("account/login", values),
   register: (values: any) => queries.post("account/register", values),
+  getUserDetails: () => queries.get("user/details"),
+  updateUserDetails: (values: any) => queries.put("user/update", values),
+  forgotPassword: (values: any) => queries.post("user/forgot-password", values),
+  checkToken: (email: string, token: string) =>
+    queries.get(`user/check-token?email=${email}&token=${token}`),
 };
 
 const Category = {
