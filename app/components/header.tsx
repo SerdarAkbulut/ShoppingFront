@@ -29,6 +29,7 @@ function Header() {
   const handleOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    window.location.reload();
     setAnchorEl(null);
   };
   const toggleDrawer = (open: boolean) => () => {

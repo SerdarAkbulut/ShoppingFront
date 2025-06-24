@@ -52,8 +52,13 @@ function Footer() {
             <Icon component={PhoneIcon} /> 0535 339 86 28
           </div>
           <div className="flex justify-center">
-            <Icon component={AlternateEmailIcon} />
-            merve_ozturk34@hotmail.com
+            <a
+              href="mailto:yazicifamelinmoda@gmail.com"
+              className="flex items-center gap-2 font-bold"
+            >
+              <Icon component={AlternateEmailIcon} />
+              yazicifamelinmoda@gmail.com
+            </a>
           </div>
         </div>
       </div>

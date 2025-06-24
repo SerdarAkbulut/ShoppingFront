@@ -9,11 +9,12 @@ import { useDispatch } from "react-redux";
 import { setToken } from "../store/token/tokenSlice";
 import { setRole } from "../store/role/roleSlice";
 import Router from "next/router";
+import { toast } from "react-toastify";
 
 function LoginPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { mutate, isSuccess } = useMutation({
+  const { mutate, isSuccess, isError } = useMutation({
     mutationFn: (values: { email: string; password: string }) =>
       request.User.login(values),
 
@@ -24,6 +25,9 @@ function LoginPage() {
       dispatch(setToken(data.token));
       dispatch(setRole(data.user.role));
       router.push("/");
+    },
+    onError: () => {
+      toast.error("E-posta veya şifre hatalı");
     },
   });
 

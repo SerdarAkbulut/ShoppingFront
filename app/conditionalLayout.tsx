@@ -12,10 +12,15 @@ export default function ConditionalLayout({
 }) {
   const pathname = usePathname();
 
-  const noLayoutPages = ["/forgot-password"]; // burada istediğin route'ları ekleyebilirsin
+  const noLayoutPages = [
+    "/forgot-password",
+    "/reset-password",
+    "/login",
+    "/register",
+  ];
 
   if (noLayoutPages.includes(pathname)) {
-    return <ClientProviders>{children}</ClientProviders>; // sadece içerik göster, layout yok
+    return <ClientProviders>{children}</ClientProviders>;
   }
 
   return (

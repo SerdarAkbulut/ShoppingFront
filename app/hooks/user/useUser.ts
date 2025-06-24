@@ -1,6 +1,6 @@
 import request from "@/app/api/client/request";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export const getUserDetails = () => {
@@ -31,10 +31,11 @@ export const checktoken = (email: string, token: string) => {
     queryFn: () => request.User.checkToken(email, encodedToken),
   });
 };
-export const checkTokenApi = async (email: string, token: string) => {
-  const encodedToken = encodeURIComponent(token);
-  const response = await axios.get(
-    `https://localhost:7277/api/user/check-token?email=${email}&token=${encodedToken}`
-  );
-  return response.data;
+export const resetPassword = () => {
+  return useMutation({
+    mutationFn: (values: any) => request.User.ResetPassword(values),
+    onSuccess: () => {
+      toast.success("Şifre Sıfırlama İşlemi Başarılı");
+    },
+  });
 };

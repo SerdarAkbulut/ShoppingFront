@@ -27,7 +27,10 @@ function ForgotPassword() {
     <div className="flex justify-center items-center h-screen">
       <form onSubmit={formik.handleSubmit} className="mb-4">
         <div>
-          <h1>Şifre sıfırlama işlemi için e-posta adresinizi giriniz</h1>
+          <h1>
+            Şifre sıfırlama işlemi için e-posta adresinizi giriniz. Mail spam
+            kutusuna düşebilir
+          </h1>
         </div>
         <div>
           <label htmlFor="email">E-posta:</label>

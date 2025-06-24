@@ -1,3 +1,4 @@
+import ResetPassword from "@/app/reset-password/page";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 axios.defaults.baseURL = "https://localhost:7277/api/";
@@ -101,6 +102,7 @@ const User = {
   forgotPassword: (values: any) => queries.post("user/forgot-password", values),
   checkToken: (email: string, token: string) =>
     queries.get(`user/check-token?email=${email}&token=${token}`),
+  ResetPassword: (values: any) => queries.post("user/reset-password", values),
 };
 
 const Category = {

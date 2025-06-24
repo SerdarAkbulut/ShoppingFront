@@ -17,10 +17,20 @@ function UserPassword() {
     },
     validationSchema: Yup.object({
       oldPassword: Yup.string().min(6, "En az 6 karakter olmalıdır."),
-      newPassword: Yup.string().min(6, "En az 6 karakter olmalıdır."),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("newPassword")], "Şifreler eşleşmiyor")
-        .min(6, "En az 6 karakter olmalıdır."),
+      newPassword: Yup.string()
+        .required("Şifre girmelisiniz")
+        .min(6, "En az 6 karakter olmalıdır.")
+        .matches(/[A-Z]/, "Şifre en az bir büyük harf (A-Z) içermelidir.")
+        .matches(/[a-z]/, "Şifre en az bir küçük harf (a-z) içermelidir.")
+        .matches(/\d/, "Şifre en az bir rakam (0-9) içermelidir.")
+        .matches(
+          /[!@#$%^&*(),.?":{}|<>_\-+=]/,
+          "Şifre en az bir özel karakter içermelidir."
+        ),
+      confirmPassword: Yup.string().oneOf(
+        [Yup.ref("newPassword")],
+        "Şifreler eşleşmiyor"
+      ),
     }),
     onSubmit: (values) => {
       mutate(values);

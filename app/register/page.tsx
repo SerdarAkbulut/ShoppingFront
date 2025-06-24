@@ -20,8 +20,15 @@ const RegisterPage = () => {
         .email("Geçerli bir e-posta adresi giriniz")
         .required("E-posta zorunludur"),
       password: Yup.string()
-        .min(6, "Şifre en az 6 karakter olmalıdır")
-        .required("Şifre zorunludur"),
+        .required("Şifre girmelisiniz")
+        .min(6, "En az 6 karakter olmalıdır.")
+        .matches(/[A-Z]/, "Şifre en az bir büyük harf (A-Z) içermelidir.")
+        .matches(/[a-z]/, "Şifre en az bir küçük harf (a-z) içermelidir.")
+        .matches(/\d/, "Şifre en az bir rakam (0-9) içermelidir.")
+        .matches(
+          /[!@#$%^&*(),.?":{}|<>_\-+=]/,
+          "Şifre en az bir özel karakter içermelidir."
+        ),
     }),
     onSubmit: (values, { setErrors }) => {
       mutate(values, {

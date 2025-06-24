@@ -42,6 +42,9 @@ export default function ProductDetailClient({ product }: { product: any }) {
         theme: "colored",
       });
     },
+    onError: () => {
+      toast.error("Lütfen Giriş Yapın");
+    },
   });
   const sizesForSelectedColor = product.productVariants
     .filter((v: any) => v.color.id === selectedColorId)

@@ -290,7 +290,7 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
             </div>
           ))}
         </div>
-        {mode === "edit" && (
+        {mode === "edit" ? (
           <div className="flex justify-between items-center mt-6">
             <Discount productId={product?.id} />
             <Button
@@ -305,10 +305,30 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
                   description,
                   productVariants: productVariants,
                 };
-                mode === "edit" ? updateProduct(payload) : addProduct(payload);
+                updateProduct(payload);
               }}
             >
-              {mode === "edit" ? "Güncelle" : "Yeni Ürün Ekle"}
+              Güncelle
+            </Button>
+          </div>
+        ) : (
+          <div className="flex justify-end items-center mt-6">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                const payload = {
+                  name: productName,
+                  price,
+                  productCategories: categoryName,
+                  images: imageUrls,
+                  description,
+                  productVariants: productVariants,
+                };
+                addProduct(payload);
+              }}
+            >
+              Yeni Ürün ekle
             </Button>
           </div>
         )}
