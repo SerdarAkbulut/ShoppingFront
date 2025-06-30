@@ -37,7 +37,7 @@ function Header() {
   };
 
   return (
-    <div className="w-full  px-52 py-5 flex justify-between">
+    <div className="w-full  2xl:px-52 xl:px-40 lg:px-32 md:px-20 sm:px-10 py-5 flex justify-between">
       <div className="lg:hidden block">
         <a onClick={() => setOpenSidebar(!openSidebar)}>
           <MenuIcon />

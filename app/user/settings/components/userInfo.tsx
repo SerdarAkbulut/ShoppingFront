@@ -20,8 +20,11 @@ function UserInfo() {
       email: Yup.string().email("Geçersiz e-posta adresi"),
       userName: Yup.string().min(6, "En az 3 karakter olmalıdır."),
       phoneNumber: Yup.string()
-        .transform((value) => value.replace(/\s+/g, "").replace(/^\+90/, "")) // +90 ve boşlukları sil
-        .matches(/^[0-9]{10}$/, "Telefon numarası 10 haneli olmalıdır."),
+        .transform(
+          (value) => value.replace(/\D/g, "") // Tüm rakam dışı karakterleri temizle
+        )
+        .matches(/^[0-9]{10}$/, "Telefon numarası 10 haneli olmalıdır.")
+        .required(),
     }),
     onSubmit: (values) => {
       mutate(values);

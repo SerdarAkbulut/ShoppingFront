@@ -3,14 +3,19 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import request from "../api/client/request";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { InputMask } from "primereact/inputmask";
+import { InputText } from "primereact/inputtext";
 
 const RegisterPage = () => {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       userName: "",
       email: "",
       password: "",
+      phone: "",
     },
     validationSchema: Yup.object().shape({
       userName: Yup.string()
@@ -29,6 +34,12 @@ const RegisterPage = () => {
           /[!@#$%^&*(),.?":{}|<>_\-+=]/,
           "Şifre en az bir özel karakter içermelidir."
         ),
+      phone: Yup.string()
+        .transform(
+          (value) => value.replace(/\D/g, "") // Tüm rakam dışı karakterleri temizle
+        )
+        .matches(/^[0-9]{10}$/, "Telefon numarası 10 haneli olmalıdır.")
+        .required(),
     }),
     onSubmit: (values, { setErrors }) => {
       mutate(values, {
@@ -56,6 +67,9 @@ const RegisterPage = () => {
             setErrors(newErrors);
           }
         },
+        onSuccess: () => {
+          router.push("/login");
+        },
       });
     },
   });
@@ -76,7 +90,7 @@ const RegisterPage = () => {
       >
         <div className="flex flex-col mb-4">
           <label>Ad Soyad</label>
-          <TextField
+          <InputText
             type="text"
             name="userName"
             onChange={formik.handleChange}
@@ -90,22 +104,35 @@ const RegisterPage = () => {
 
         <div className="flex flex-col mb-4">
           <label>E-posta:</label>
-          <TextField
+          <InputText
             type="email"
             name="email"
             onChange={formik.handleChange}
             value={formik.values.email}
-            variant="standard"
+            variant="outlined"
             onBlur={formik.handleBlur}
           />
           {formik.errors.email && formik.touched.email && (
             <div>{formik.errors.email}</div>
           )}
         </div>
-
+        <div className="flex flex-col mb-4">
+          <InputMask
+            name="phone"
+            mask="(999) 999-9999"
+            value={formik.values.phone}
+            onBlur={formik.handleBlur}
+            onChange={(e) => formik.setFieldValue("phone", e.value)}
+            style={{ width: "100%", background: "transparent" }}
+            className="border-2"
+          />
+          {formik.errors.phone && formik.touched.phone && (
+            <div>{formik.errors.phone}</div>
+          )}
+        </div>
         <div className="flex flex-col mb-4">
           <label>Şifre:</label>
-          <TextField
+          <InputText
             type="password"
             name="password"
             onChange={formik.handleChange}
@@ -117,7 +144,9 @@ const RegisterPage = () => {
           )}
         </div>
 
-        <button type="submit">Kayıt Ol</button>
+        <Button type="submit" variant="outlined">
+          Kayıt Ol
+        </Button>
       </form>
     </div>
   );

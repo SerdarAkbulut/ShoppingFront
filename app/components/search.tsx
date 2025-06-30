@@ -5,16 +5,17 @@ import React, { KeyboardEvent, useEffect, useState } from "react";
 
 function SearchProduct() {
   const [searchTerm, setSearchTerm] = useState("");
+
   const router = useRouter();
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      router.push(`/urunler/arama?q=${searchTerm}`);
+      router.push(`/urunler/arama/1?q=${searchTerm}`);
     }
   };
   const onClickSearch = () => {
-    router.push(`/urunler/arama?q=${searchTerm}`);
+    router.push(`/urunler/arama/1?q=${searchTerm}`);
   };
   return (
     <div>

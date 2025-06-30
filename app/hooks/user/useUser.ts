@@ -1,6 +1,5 @@
 import request from "@/app/api/client/request";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export const getUserDetails = () => {

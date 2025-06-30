@@ -5,15 +5,24 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-
-interface productImages {
-  images: {
-    imageUrl: string;
-  }[];
-}
-function MainSlider({ images }: productImages) {
+import { getSliders } from "../hooks/slider/useSlider";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+function MainSlider() {
+  const { data } = getSliders();
+  const role = useSelector((state: RootState) => state.role.role);
+  console.log(role, "role");
   return (
     <>
+      {role === "Admin" ? (
+        <>
+          <a className="text-2xl hover:cursor-pointer" href="/admin/add-slider">
+            Slider Değiş
+          </a>
+        </>
+      ) : (
+        ""
+      )}
       <Swiper
         effect="flip"
         grabCursor={true}
@@ -22,9 +31,9 @@ function MainSlider({ images }: productImages) {
         modules={[Pagination, Navigation]}
         className="mySwiper h-full"
       >
-        {images.map((item) => (
+        {data?.map((item) => (
           <SwiperSlide key={item.imageUrl}>
-            <img src={item.imageUrl} className="object-cover h-full   w-full" />
+            <img src={item.imageUrl} className="object-cover w-full h-full" />
           </SwiperSlide>
         ))}
       </Swiper>

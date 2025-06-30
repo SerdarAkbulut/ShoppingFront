@@ -1,7 +1,6 @@
-import ResetPassword from "@/app/reset-password/page";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-axios.defaults.baseURL = "https://localhost:7277/api/";
+axios.defaults.baseURL = "http://localhost:5034/api/";
 
 axios.interceptors.response.use(
   (response) => response,
@@ -58,14 +57,14 @@ const Product = {
   list: (page: number) => queries.get(`products?page=${page}`),
   details: (id: number) => queries.get(`products/${id}`),
   add: (body: any) => queries.post("products", body),
-  update: (id: number, body: any) => queries.put(`products/${id}`, body),
+  update: (id: any, body: any) => queries.put(`products/${id}`, body),
   getVariant: () => queries.get("products/product-variant"),
   delete: (id: number) => queries.delete(`products/${id}`),
   getByCategory: (categoryId: number, page: number) =>
     queries.get(`products/category/${categoryId}/${page}`),
   getLastProducts: () => queries.get("products/last"),
-  getBySearch: (searchTerm: string) =>
-    queries.get(`products/search?q=${searchTerm}`),
+  getBySearch: (searchTerm: string, page: number) =>
+    queries.get(`products/search/${page}?q=${searchTerm}`),
   getProductsForAdmin: () => queries.get("products/admin-products"),
   addBestSellers: (productId: number) =>
     queries.post(`products/add-best-sellers/${productId}`, {}),
@@ -92,6 +91,12 @@ const Cart = {
     queries.delete(
       `cart/deleteItem?productId=${productId}&quantity=${quantity}`
     ),
+};
+
+const Slider = {
+  getSliders: () => queries.get("/slider"),
+  addSlider: (Images: any) => queries.post("slider/add-item", { Images }),
+  deleteSlider: (id: any) => queries.delete(`slider/${id}`),
 };
 
 const User = {
@@ -130,5 +135,6 @@ const request = {
   Category,
   Address,
   Order,
+  Slider,
 };
 export default request;

@@ -15,10 +15,12 @@ export function slugify(str: string): string {
     .replace(/^-+|-+$/g, ""); // baştaki/sondaki tireleri kaldır
 }
 export const formatToCurrency = (value: string | number) => {
-  const number =
+  const cleaned =
     typeof value === "string"
-      ? parseFloat(value.replace(/\./g, "").replace(",", "."))
+      ? value.replace(/[^\d,]/g, "").replace(",", ".")
       : value;
+
+  const number = parseFloat(cleaned);
 
   if (isNaN(number)) return "";
 
@@ -27,5 +29,14 @@ export const formatToCurrency = (value: string | number) => {
     currency: "TRY",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
+  });
+};
+
+export const convertToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
   });
 };

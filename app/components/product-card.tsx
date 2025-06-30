@@ -38,12 +38,12 @@ const ProductCard: React.FC<productCard> = ({
           {productImages?.map((item) => (
             <SwiperSlide
               key={item.imageUrl}
-              className="h-[200px] flex items-center justify-center"
+              className="h-full flex items-center justify-center"
             >
               <img
                 src={item.imageUrl}
                 alt=""
-                className="w-full h-[400px] object-cover border-b hover:scale-110 rounded-lg "
+                className="w-full h-full  object-cover border-b hover:scale-110 rounded-lg "
               />
             </SwiperSlide>
           ))}

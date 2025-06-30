@@ -7,26 +7,11 @@ import LastProducts from "./components/lastProducts";
 import BestSeller from "./components/bestSeller";
 
 export default function Home() {
-  const dummyProductImages = [
-    {
-      imageUrl:
-        "https://sysrqmts.com/images/games/counter-strike-global-offensive.jpg",
-    },
-    {
-      imageUrl:
-        "https://yt3.googleusercontent.com/ytc/AIdro_k7Kew6C0Xwv1GBr16JrKKDlzyRkHX7OW5Y2JhbSDYuh2A=s900-c-k-c0x00ffffff-no-rj",
-    },
-    {
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUfwqO9H99Y1w4BKbmnKWkE0vlySsHtQ8tvQ&s",
-    },
-  ];
-
   return (
-    <div className="px-52">
+    <div className="2xl:px-52 xl:px-40 lg:px-32 md:px-20 sm:px-10">
       <div className="flex justify-center ">
         <div className="w-full h-[800px] ">
-          <MainSlider images={dummyProductImages} />
+          <MainSlider />
         </div>
       </div>
       <div className="mt-5 ">

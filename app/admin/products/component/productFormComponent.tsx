@@ -15,11 +15,11 @@ import {
 } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { debug } from "console";
 import { InputTextarea } from "primereact/inputtextarea";
 import React, { useEffect, useState } from "react";
 import Discount from "./discount";
-import { formatToCurrency } from "@/app/utils/slugify";
+import { convertToBase64, formatToCurrency } from "@/app/utils/slugify";
+import { toast } from "react-toastify";
 
 interface ProductProps {
   product?: {
@@ -67,24 +67,17 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
     }
   }, [product]);
 
-  const convertToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
   const { mutate: addProduct } = useMutation({
     mutationFn: (values: any) => request.Product.add(values),
-    onSuccess: (data) => console.log("Product added:", data),
+    onSuccess: () => toast.success("Ürün eklendi"),
     onError: (err: AxiosError) => console.error(err),
   });
 
   const { mutate: updateProduct } = useMutation({
     mutationFn: (values: any) => request.Product.update(product?.id, values),
-    onSuccess: (data) => console.log("Product updated:", data),
+    onSuccess: () => {
+      toast.success("Ürün Güncellendi");
+    },
     onError: (err: AxiosError) => console.error(err),
   });
 
@@ -124,10 +117,12 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
         <TextField
           variant="standard"
           label="Ürün Fiyatı"
-          value={formatToCurrency(price)}
+          type=""
+          value={price}
           onChange={(e) => setPrice(e.target.value)}
           fullWidth
         />
+        <span>{formatToCurrency(price)}</span>
 
         <InputTextarea
           value={description}

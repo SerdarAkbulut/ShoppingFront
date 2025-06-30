@@ -3,7 +3,7 @@ import { Button, TextField } from "@mui/material";
 import React from "react";
 import { toast } from "react-toastify"; // toast eğer burada kullanılacaksa unutma
 
-function Discount({ productId }: { productId: number }) {
+function Discount({ productId }: { productId: any }) {
   const [discount, setDiscount] = React.useState<string>("");
 
   const { mutate } = addDiscount();

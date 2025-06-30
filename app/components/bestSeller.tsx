@@ -6,7 +6,7 @@ import ProductCard from "./product-card";
 function BestSeller() {
   const { data } = getBestSellers();
   return (
-    <div className="grid grid-cols-5 gap-4 ">
+    <div className="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-5 ">
       {data?.map((item: any) => (
         <ProductCard
           name={item.name}

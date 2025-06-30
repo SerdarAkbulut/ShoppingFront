@@ -59,10 +59,10 @@ export async function getFetchProductsByCategory(
   }
 }
 
-export const useSearchProducts = (q: string) => {
+export const useSearchProducts = (q: string, page: any) => {
   return useQuery({
     queryKey: ["searchProducts", q], // q'yu ekle
-    queryFn: () => request.Product.getBySearch(q),
+    queryFn: () => request.Product.getBySearch(q, page),
     enabled: Boolean(q),
     staleTime: Infinity,
   });
