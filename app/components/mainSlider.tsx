@@ -31,7 +31,7 @@ function MainSlider() {
         modules={[Pagination, Navigation]}
         className="mySwiper h-full"
       >
-        {data?.map((item) => (
+        {data?.map((item: any) => (
           <SwiperSlide key={item.imageUrl}>
             <img src={item.imageUrl} className="object-cover w-full h-full" />
           </SwiperSlide>

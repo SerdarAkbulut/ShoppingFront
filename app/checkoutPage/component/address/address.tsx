@@ -37,7 +37,13 @@ function UserAddresses() {
                   aria-labelledby="demo-radio-buttons-group-label"
                   name="radio-buttons-group"
                   value={selectedAddress || order.orderAddress}
-                  onChange={(e) => setSelectedAddress(e.target.value)}
+                  onChange={(e) =>
+                    setSelectedAddress(
+                      e.currentTarget.value
+                        ? Number(e.currentTarget.value)
+                        : null
+                    )
+                  }
                 >
                   <FormControlLabel
                     value={item.id}

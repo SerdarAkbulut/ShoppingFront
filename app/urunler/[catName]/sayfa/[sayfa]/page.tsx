@@ -2,13 +2,13 @@ import React from "react";
 import GetCatProducts from "../../component/getCatProducts";
 import { getFetchProductsByCategory } from "@/app/hooks/products/useProducts";
 import { Metadata } from "next";
-import { JsonLdProductsByCategory } from "@/app/JsonLd/JsonLdProducts";
+// import { JsonLdProductsByCategory } from "@/app/JsonLd/JsonLdProducts";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { catName: string; sayfa: string };
-}): Promise<Metadata> {
+type Props = {
+  params: Promise<{ catName: string; sayfa: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { catName, sayfa } = await params;
 
   const parts = catName.split("-");
@@ -61,7 +61,7 @@ async function ProductCategory({ params }: { params: any }) {
   const name = parts.join("-"); // Geri kalanlar kategori ismi
   return (
     <>
-      <JsonLdProductsByCategory props={{ catId: Id, page: sayfa }} />
+      {/* <JsonLdProductsByCategory props={{ catId: Id, page: sayfa }} /> */}
 
       <GetCatProducts id={Id} page={Number(sayfa)} catName={name} />
     </>

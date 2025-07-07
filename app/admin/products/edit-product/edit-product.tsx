@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog, DialogTitle } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import ProductFormComponent from "../component/productFormComponent";
 
 interface SimpleDialogProps {
@@ -33,11 +33,11 @@ function EditProduct({ open, onClose, product }: SimpleDialogProps) {
         open={open}
         onClose={onClose}
         fullWidth
-        maxWidth="lg" // 'sm', 'md', 'lg', 'xl' gibi değerler alabilir
+        maxWidth="lg"
         PaperProps={{
           style: {
             width: "100%",
-            maxWidth: "900px", // isteğe bağlı özel genişlik
+            maxWidth: "900px",
           },
         }}
       >

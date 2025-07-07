@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import ProductCard from "../components/product-card";
 import { getProducts } from "../hooks/products/useProducts";
-import { JsonLdProductList } from "../JsonLd/JsonLdProducts";
+// import { JsonLdProductList } from "../JsonLd/JsonLdProducts";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@mui/material";
 
@@ -24,7 +24,7 @@ function ProductsPage() {
 
   return (
     <>
-      <JsonLdProductList page={page} />
+      {/* <JsonLdProductList page={page} /> */}
       <div className="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-5 mt-5 mx-8 2xl:mx-52 xl:mx-44 lg:mx-32 md:mx-24 sm:mx-16">
         {data?.products.map((item: any, index: any) => (
           <div key={index}>

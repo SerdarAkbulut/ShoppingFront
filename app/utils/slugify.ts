@@ -18,7 +18,7 @@ export const formatToCurrency = (value: string | number) => {
   const cleaned =
     typeof value === "string"
       ? value.replace(/[^\d,]/g, "").replace(",", ".")
-      : value;
+      : value.toString();
 
   const number = parseFloat(cleaned);
 

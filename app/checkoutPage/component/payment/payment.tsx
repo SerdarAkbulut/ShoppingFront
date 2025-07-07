@@ -76,7 +76,7 @@ function Payment() {
             mask="99/99"
             placeholder="Son Kullanma Tarihi"
             value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
+            onChange={(e) => setExpiryDate(e.target.value || "")}
             className="p-inputtext"
           />
           <InputText

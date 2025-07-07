@@ -3,17 +3,16 @@ import type { Metadata } from "next";
 import ProductDetailClient from "../components/ProductDetailClient";
 import { getFetchProductDetails } from "@/app/hooks/products/useProducts";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const [Id] = slug.split("-");
   const productId = Number(Id);
 
   if (isNaN(productId)) return {};
-  debugger;
 
   const product = await getFetchProductDetails(productId);
   if (!product) return {};
@@ -40,13 +39,13 @@ export async function generateMetadata({
   };
 }
 
-debugger;
-export default async function ProductDetailPage({ params }: { params: any }) {
+export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
   const [Id] = slug.split("-");
   const productId = Number(Id);
-  console.log(productId);
+
   if (isNaN(productId)) return notFound();
+
   const product = await getFetchProductDetails(productId);
   if (!product) return notFound();
 

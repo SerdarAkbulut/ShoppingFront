@@ -4,7 +4,7 @@ function AddProduct() {
   return (
     <div className="flex justify-center items-center bg-gray-100 p-6">
       <div className="w-1/2">
-        <AddProductComponent></AddProductComponent>
+        <AddProductComponent />
       </div>
     </div>
   );

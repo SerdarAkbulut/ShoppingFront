@@ -50,7 +50,10 @@ function ResetPassword() {
       router.push("/");
     }
   }, [resetSucc]);
-  const { data, isLoading, error, isError } = checktoken(email, token);
+  const { data, isLoading, error, isError } = checktoken(
+    email || "",
+    token || ""
+  );
   if (data?.code === 400) {
     return (
       <div className="flex flex-col gap-4 justify-center items-center h-screen">

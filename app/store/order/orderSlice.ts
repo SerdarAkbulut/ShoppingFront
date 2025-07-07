@@ -4,14 +4,28 @@ interface OrderState {
   orderProducts: any[];
   orderAddress: number | null;
   orderTotal: number | null;
-  orderPayment: any[];
+  orderPayment: {
+    CardHolderName: string;
+    cardNumber: string;
+    expireYear: string;
+    expireMonth: string;
+    cvc: string;
+    installment: string;
+  };
 }
 
 const initialState: OrderState = {
   orderProducts: [],
   orderAddress: null,
   orderTotal: null,
-  orderPayment: [],
+  orderPayment: {
+    CardHolderName: "",
+    cardNumber: "",
+    expireYear: "",
+    expireMonth: "",
+    cvc: "",
+    installment: "",
+  },
 };
 
 export const orderSlice = createSlice({

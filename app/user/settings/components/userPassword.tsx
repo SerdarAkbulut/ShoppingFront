@@ -1,11 +1,20 @@
 "use client";
 import { updateUserDetails } from "@/app/hooks/user/useUser";
 import { Button, TextField } from "@mui/material";
+import { AxiosError } from "axios";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+type ErrorItem = {
+  code: string;
+  description: string;
+};
 
+type ErrorResponse = {
+  message: string;
+  errors: ErrorItem[];
+};
 function UserPassword() {
   const { mutate, error, isError } = updateUserDetails();
 
@@ -37,12 +46,24 @@ function UserPassword() {
     },
   });
   useEffect(() => {
-    if (isError && error?.response?.data?.errors) {
-      error.response.data.errors.forEach((err) => {
-        toast.error(err.message);
-      });
+    if (isError) {
+      const axiosError = error as AxiosError<ErrorResponse>;
+      const errors = axiosError.response?.data?.errors;
+
+      if (Array.isArray(errors)) {
+        errors.forEach((err) => {
+          toast.error(err.description); // burada `.description` var `.message` değil!
+        });
+      } else {
+        // Eğer sadece genel mesaj geldiyse onu göster:
+        const message = axiosError.response?.data?.message;
+        if (message) {
+          toast.error(message);
+        }
+      }
     }
   }, [isError, error]);
+
   return (
     <div className="flex justify-center">
       <div className="mt-20">

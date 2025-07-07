@@ -59,7 +59,7 @@ const ProductCard: React.FC<productCard> = ({
         {discount !== null ? (
           <>
             <div className="line-through">{formatToCurrency(price)} </div>
-            <div className="font-bold">{formatToCurrency(discount)} </div>
+            <div className="font-bold">{formatToCurrency(discount || 0)} </div>
           </>
         ) : (
           <div>{formatToCurrency(price)} </div>
