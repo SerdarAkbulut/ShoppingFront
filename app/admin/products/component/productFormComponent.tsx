@@ -1,5 +1,4 @@
 "use client";
-import request from "@/app/api/client/request";
 import {
   Button,
   Checkbox,
@@ -18,8 +17,9 @@ import { AxiosError } from "axios";
 import { InputTextarea } from "primereact/inputtextarea";
 import React, { useEffect, useState } from "react";
 import Discount from "./discount";
-import { convertToBase64, formatToCurrency } from "@/app/utils/slugify";
 import { toast } from "react-toastify";
+import { convertToBase64, formatToCurrency } from "app/utils/slugify";
+import request from "app/api/client/request";
 
 interface ProductProps {
   product?: any;

@@ -1,7 +1,8 @@
 "use client";
-import ProductCard from "@/app/components/product-card";
-import { getProductsByCategory } from "@/app/hooks/products/useProducts";
+
 import { Button } from "@mui/material";
+import ProductCard from "app/components/product-card";
+import { getProductsByCategory } from "app/hooks/products/useProducts";
 import { useRouter } from "next/navigation";
 import React from "react";
 function GetCatProducts({

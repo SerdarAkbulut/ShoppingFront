@@ -1,7 +1,6 @@
-import { addDiscount } from "@/app/hooks/products/useProducts";
 import { Button, TextField } from "@mui/material";
+import { addDiscount } from "app/hooks/products/useProducts";
 import React from "react";
-import { toast } from "react-toastify"; // toast eğer burada kullanılacaksa unutma
 
 function Discount({ productId }: { productId: any }) {
   const [discount, setDiscount] = React.useState<string>("");

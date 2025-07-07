@@ -19,7 +19,10 @@ function Header() {
   const open = Boolean(anchorEl);
   const [openSidebar, setOpenSidebar] = useState(false);
   const itemCount =
-    cart?.cartItems.reduce((total, item) => total + item.quantity, 0) || 0;
+    cart?.cartItems.reduce(
+      (total: any, item: any) => total + item.quantity,
+      0
+    ) || 0;
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };

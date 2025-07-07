@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import request from "@/app/api/client/request";
 import { Button } from "@mui/material";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -10,7 +9,8 @@ import EditProduct from "../edit-product/edit-product";
 import {
   addBestSellers,
   getProductsForAdmin,
-} from "@/app/hooks/products/useProducts";
+} from "app/hooks/products/useProducts";
+import request from "app/api/client/request";
 
 function AdminProductList() {
   const { data, refetch } = getProductsForAdmin();

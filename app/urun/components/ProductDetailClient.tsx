@@ -4,11 +4,11 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import ProductImage from "./productImage";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import request from "@/app/api/client/request";
 
-import { updateCart } from "@/app/components/updateCart";
 import { toast } from "react-toastify";
-import { formatToCurrency } from "@/app/utils/slugify";
+import { updateCart } from "app/components/updateCart";
+import request from "app/api/client/request";
+import { formatToCurrency } from "app/utils/slugify";
 
 export default function ProductDetailClient({ product }: { product: any }) {
   const [selectedColorId, setSelectedColorId] = useState("");

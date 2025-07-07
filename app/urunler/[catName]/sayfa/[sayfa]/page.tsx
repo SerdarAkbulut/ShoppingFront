@@ -1,7 +1,7 @@
 import React from "react";
 import GetCatProducts from "../../component/getCatProducts";
-import { getFetchProductsByCategory } from "@/app/hooks/products/useProducts";
 import { Metadata } from "next";
+import { getFetchProductsByCategory } from "app/hooks/products/useProducts";
 // import { JsonLdProductsByCategory } from "@/app/JsonLd/JsonLdProducts";
 
 type Props = {

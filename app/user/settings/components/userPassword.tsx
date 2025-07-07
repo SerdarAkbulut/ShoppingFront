@@ -1,6 +1,6 @@
 "use client";
-import { updateUserDetails } from "@/app/hooks/user/useUser";
 import { Button, TextField } from "@mui/material";
+import { updateUserDetails } from "app/hooks/user/useUser";
 import { AxiosError } from "axios";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";

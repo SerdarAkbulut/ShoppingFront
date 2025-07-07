@@ -3,8 +3,6 @@ import { InputText } from "primereact/inputtext";
 import { InputMask } from "primereact/inputmask";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setOrder } from "@/app/store/order/orderSlice";
-import { getInstallmentOptions } from "@/app/hooks/products/useProducts";
 import {
   FormControl,
   InputLabel,
@@ -12,7 +10,9 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { RootState } from "@/app/store/store";
+import { RootState } from "app/store/store";
+import { getInstallmentOptions } from "app/hooks/products/useProducts";
+import { setOrder } from "app/store/order/orderSlice";
 
 function Payment() {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ function Payment() {
   const bin = cardNumber.replace(/\s/g, "").substring(0, 6);
   const cart = useSelector((state: RootState) => state.cart.cart);
   const totalPrice = cart?.cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc: any, item: any) => acc + item.price * item.quantity,
     0
   );
 

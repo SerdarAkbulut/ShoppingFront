@@ -1,5 +1,5 @@
-import request from "@/app/api/client/request";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import request from "app/api/client/request";
 import { toast } from "react-toastify";
 
 export const getProducts = (page: number) => {

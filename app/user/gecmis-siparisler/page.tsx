@@ -1,8 +1,8 @@
 "use client";
-import { getUserPrevOrders } from "@/app/hooks/products/useProducts";
 import React from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { getUserPrevOrders } from "app/hooks/products/useProducts";
 function PrevOrders() {
   const { data, isLoading, isError, error } = getUserPrevOrders();
 

@@ -1,6 +1,6 @@
-import { addSlider } from "@/app/hooks/slider/useSlider";
-import { convertToBase64 } from "@/app/utils/slugify";
 import { Button, styled } from "@mui/material";
+import { addSlider } from "app/hooks/slider/useSlider";
+import { convertToBase64 } from "app/utils/slugify";
 import React, { useState } from "react";
 
 function AddSlider() {

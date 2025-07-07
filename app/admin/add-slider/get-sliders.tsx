@@ -1,4 +1,4 @@
-import { deleteSlider, getSliders } from "@/app/hooks/slider/useSlider";
+import { deleteSlider, getSliders } from "app/hooks/slider/useSlider";
 import React from "react";
 
 function GetSliders() {

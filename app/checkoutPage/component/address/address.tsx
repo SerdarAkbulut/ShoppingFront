@@ -1,7 +1,3 @@
-import request from "@/app/api/client/request";
-import { setOrder } from "@/app/store/order/orderSlice";
-import { RootState } from "@/app/store/store";
-import AddUserAdress from "@/app/user/address/addUserAddress";
 import {
   FormControl,
   FormControlLabel,
@@ -9,6 +5,10 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import request from "app/api/client/request";
+import { setOrder } from "app/store/order/orderSlice";
+import { RootState } from "app/store/store";
+import AddUserAdress from "app/user/address/addUserAddress";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

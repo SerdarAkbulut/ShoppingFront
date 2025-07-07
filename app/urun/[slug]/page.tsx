@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ProductDetailClient from "../components/ProductDetailClient";
-import { getFetchProductDetails } from "@/app/hooks/products/useProducts";
+import { getFetchProductDetails } from "app/hooks/products/useProducts";
 
 type Props = {
   params: Promise<{ slug: string }>;

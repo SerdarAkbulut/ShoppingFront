@@ -3,14 +3,14 @@ import React, { useRef } from "react";
 import { Stepper } from "primereact/stepper";
 import { StepperPanel } from "primereact/stepperpanel";
 import { Button } from "primereact/button";
-import CartPage from "@/app/checkoutPage/component/cart/cart";
 import Address from "./address/address";
 import Payment from "./payment/payment";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store/store";
 import { useMutation } from "@tanstack/react-query";
-import request from "@/app/api/client/request";
 import { toast } from "react-toastify";
+import { RootState } from "app/store/store";
+import CartPage from "./cart/cart";
+import request from "app/api/client/request";
 
 function StepperComponent() {
   const stepperRef = useRef<any>(null);

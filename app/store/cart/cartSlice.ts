@@ -1,5 +1,5 @@
-import { Cart } from "@/app/model/cart";
 import { createSlice } from "@reduxjs/toolkit";
+import { Cart } from "app/model/cart";
 
 interface CartState {
   cart: Cart | null;

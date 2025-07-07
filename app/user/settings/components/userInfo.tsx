@@ -4,8 +4,8 @@ import * as Yup from "yup";
 import React from "react";
 import { useFormik } from "formik";
 import { MuiTelInput } from "mui-tel-input";
-import { getUserDetails, updateUserDetails } from "@/app/hooks/user/useUser";
 import { InputMask } from "primereact/inputmask";
+import { getUserDetails, updateUserDetails } from "app/hooks/user/useUser";
 
 function UserInfo() {
   const { mutate } = updateUserDetails();

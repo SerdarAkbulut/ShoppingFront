@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import request from "@/app/api/client/request";
+import request from "app/api/client/request";
 
 export const getSliders = () => {
   return useQuery({

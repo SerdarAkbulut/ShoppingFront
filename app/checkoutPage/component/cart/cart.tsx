@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import request from "../../../api/client/request";
 import { updateCart } from "../../../components/updateCart";
-import { setOrder } from "@/app/store/order/orderSlice";
+import { setOrder } from "app/store/order/orderSlice";
 
 function CartPage() {
   const cart = useSelector((state: RootState) => state.cart.cart);
@@ -38,7 +38,7 @@ function CartPage() {
     onSuccess: () => refetch(),
   });
   const totalPrice = cart?.cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc: any, item: any) => acc + item.price * item.quantity,
     0
   );
 
@@ -51,7 +51,7 @@ function CartPage() {
   return (
     <div className="flex w-full  items-center justify-center bg-gray-100">
       <div className="bg-white p-8  shadow-lg w-full max-w-2xl">
-        {cart?.cartItems.map((item, index) => (
+        {cart?.cartItems.map((item: any, index: any) => (
           <div
             key={item.productId + index}
             className="grid grid-cols-4 p-4 mb-4 bg-cyan-100  shadow-sm"
