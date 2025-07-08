@@ -12,9 +12,12 @@ export const getProducts = (page: number) => {
 
 export async function getFetchProductDetails(id: number) {
   try {
-    const res = await fetch(`http://localhost:5034/api/products/${id}`, {
-      next: { revalidate: 60 },
-    });
+    const res = await fetch(
+      `https://famelinmodayazici.com.tr/api/products/${id}`,
+      {
+        next: { revalidate: 60 },
+      }
+    );
 
     if (!res.ok) return null;
     const product = await res.json();
@@ -42,7 +45,7 @@ export async function getFetchProductsByCategory(
 ) {
   try {
     const res = await fetch(
-      `http://localhost:5034/api/products/category/${categoryId}/${page}`,
+      `https://famelinmodayazici.com.tr/api/products/category/${categoryId}/${page}`,
       {
         next: { revalidate: 60 },
       }
