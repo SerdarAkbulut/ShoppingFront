@@ -13,7 +13,7 @@ export const getProducts = (page: number) => {
 export async function getFetchProductDetails(id: number) {
   try {
     const res = await fetch(
-      `https://famelinmodayazici.com.tr/api/products/${id}`,
+      `https://api.famelinmodayazici.com.tr/api/products/${id}`,
       {
         next: { revalidate: 60 },
       }
@@ -45,7 +45,7 @@ export async function getFetchProductsByCategory(
 ) {
   try {
     const res = await fetch(
-      `https://famelinmodayazici.com.tr/api/products/category/${categoryId}/${page}`,
+      `https://api.famelinmodayazici.com.tr/api/products/category/${categoryId}/${page}`,
       {
         next: { revalidate: 60 },
       }
