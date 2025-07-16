@@ -95,7 +95,11 @@ const RegisterPage = () => {
   const [showAydinlatmaMetni, setShowAydinlatmaMetni] = useState(false);
   const { mutate } = useMutation({
     mutationFn: (values: {
-      userName: string;
+      name: string;
+      surName: string;
+      phone: string;
+      uyelikSozlesmesi: boolean;
+      aydinlatmaMetni: boolean;
       password: string;
       email: string;
     }) => request.User.register(values),
