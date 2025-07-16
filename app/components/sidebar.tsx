@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Box,
+  Button,
   Divider,
   Drawer,
   List,
@@ -31,6 +32,17 @@ function SideBar({
   };
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation">
+      <List>
+        <ListItem>
+          <Button
+            LinkComponent={"a"}
+            href="/"
+            className="!text-[#FFD700] !font-bold !bg-white !rounded-xl !border-2 !border-[#FFD700] hover:!bg-[#FFD700] hover:!text-white transition-all duration-500 ease-in-out"
+          >
+            famelinmodayazici
+          </Button>
+        </ListItem>
+      </List>
       <List>
         <ListItem>
           <SearchProduct />
