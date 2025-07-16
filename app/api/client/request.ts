@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-axios.defaults.baseURL = process.env.PRODUCTION_API_URL;
+axios.defaults.baseURL =
+  process.env.PRODUCTION_API_URL || "https://api.famelinmodayazici.com.tr/api/";
 
 axios.interceptors.response.use(
   (response) => response,
