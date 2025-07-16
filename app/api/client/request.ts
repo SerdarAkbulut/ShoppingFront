@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-axios.defaults.baseURL = process.env.LOCAL_API_URL;
+axios.defaults.baseURL = process.env.PRODUCTION_API_URL;
 
 axios.interceptors.response.use(
   (response) => response,
