@@ -3,24 +3,40 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import request from "../api/client/request";
-import { Button, TextField } from "@mui/material";
+import { Button, Checkbox, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { InputMask } from "primereact/inputmask";
 import { InputText } from "primereact/inputtext";
+import UyelikSozlesmesi from "app/components/uyelikSozlesme";
+import { useState } from "react";
+import AydinlatmaMetniDialog from "app/components/aydinlatmaMetni";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
-      userName: "",
+      name: "",
+      surName: "",
       email: "",
       password: "",
       phone: "",
+      uyelikSozlesmesi: false,
+      aydinlatmaMetni: false,
     },
     validationSchema: Yup.object().shape({
-      userName: Yup.string()
-        .min(3, "Kullanıcı adı en az 3 karakter olmalıdır")
-        .required("Kullanıcı adı zorunludur"),
+      uyelikSozlesmesi: Yup.boolean()
+        .oneOf([true], "Üyelik sözleşmesini kabul etmelisiniz")
+        .required("Üyelik sözleşmesini kabul etmelisiniz"),
+      aydinlatmaMetni: Yup.boolean()
+        .oneOf([true], "Aydınlatma metnini kabul etmelisiniz")
+        .required("Aydınlatma metnini kabul etmelisiniz"),
+      name: Yup.string()
+        .min(3, "Ad  en az 3 karakter olmalıdır")
+        .required("Ad   zorunludur"),
+      surName: Yup.string()
+        .min(3, "Soyad  en az 3 karakter olmalıdır")
+        .required("Soyad zorunludur"),
       email: Yup.string()
         .email("Geçerli bir e-posta adresi giriniz")
         .required("E-posta zorunludur"),
@@ -39,15 +55,17 @@ const RegisterPage = () => {
           (value) => value.replace(/\D/g, "") // Tüm rakam dışı karakterleri temizle
         )
         .matches(/^[0-9]{10}$/, "Telefon numarası 10 haneli olmalıdır.")
-        .required(),
+        .required("Telefon numarası zorunludur"),
     }),
     onSubmit: (values, { setErrors }) => {
       mutate(values, {
         onError: (error: any) => {
           if (error.response?.data) {
-            const errorsArray = error.response.data; // Backend'den gelen hata dizisi
+            const errorsArray = error.response.data;
             const newErrors: Record<string, string> = {};
-
+            toast.error(
+              error.response.data.message || "Kayıt işlemi başarısız oldu."
+            );
             errorsArray.forEach(
               (err: { code: string; description: string }) => {
                 if (err.code === "PasswordRequiresNonAlphanumeric") {
@@ -73,7 +91,8 @@ const RegisterPage = () => {
       });
     },
   });
-
+  const [showUyelikSozlesmesi, setShowUyelikSozlesmesi] = useState(false);
+  const [showAydinlatmaMetni, setShowAydinlatmaMetni] = useState(false);
   const { mutate } = useMutation({
     mutationFn: (values: {
       userName: string;
@@ -84,21 +103,31 @@ const RegisterPage = () => {
 
   return (
     <div className="flex  items-center justify-center   ">
-      <form
-        onSubmit={formik.handleSubmit}
-        className="w-96 bg-gray-100 mt-64 p-12"
-      >
+      <form onSubmit={formik.handleSubmit} className=" mt-64 p-12">
         <div className="flex flex-col mb-4">
-          <label>Ad Soyad</label>
+          <label>Ad </label>
           <InputText
             type="text"
-            name="userName"
+            name="name"
             onChange={formik.handleChange}
-            value={formik.values.userName}
+            value={formik.values.name}
             onBlur={formik.handleBlur}
           />
-          {formik.errors.userName && formik.touched.userName && (
-            <div>{formik.errors.userName}</div>
+          {formik.errors.name && formik.touched.name && (
+            <div className="text-red-500">{formik.errors.name}</div>
+          )}
+        </div>
+        <div className="flex flex-col mb-4">
+          <label> Soyad</label>
+          <InputText
+            type="text"
+            name="surName"
+            onChange={formik.handleChange}
+            value={formik.values.surName}
+            onBlur={formik.handleBlur}
+          />
+          {formik.errors.surName && formik.touched.surName && (
+            <div className="text-red-500">{formik.errors.surName}</div>
           )}
         </div>
 
@@ -113,10 +142,12 @@ const RegisterPage = () => {
             onBlur={formik.handleBlur}
           />
           {formik.errors.email && formik.touched.email && (
-            <div>{formik.errors.email}</div>
+            <div className="text-red-500">{formik.errors.email}</div>
           )}
         </div>
         <div className="flex flex-col mb-4">
+          <label>Telefon:</label>
+
           <InputMask
             name="phone"
             mask="(999) 999-9999"
@@ -127,7 +158,7 @@ const RegisterPage = () => {
             className="border-2"
           />
           {formik.errors.phone && formik.touched.phone && (
-            <div>{formik.errors.phone}</div>
+            <div className="text-red-500">{formik.errors.phone}</div>
           )}
         </div>
         <div className="flex flex-col mb-4">
@@ -140,13 +171,63 @@ const RegisterPage = () => {
             onBlur={formik.handleBlur}
           />
           {formik.errors.password && formik.touched.password && (
-            <div>{formik.errors.password}</div>
+            <div className="text-red-500">{formik.errors.password}</div>
           )}
         </div>
-
-        <Button type="submit" variant="outlined">
-          Kayıt Ol
-        </Button>
+        <div>
+          <div className="font-light text-sm">
+            <Checkbox
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              name="uyelikSozlesmesi"
+            />
+            <span
+              className="underline hover:cursor-pointer"
+              onClick={() => setShowUyelikSozlesmesi(true)}
+            >
+              Üyelik sözleşmesini kabul ediyorum.
+            </span>
+            {formik.errors.uyelikSozlesmesi &&
+              formik.touched.uyelikSozlesmesi && (
+                <div className="text-red-500">
+                  {" "}
+                  {formik.errors.uyelikSozlesmesi}
+                </div>
+              )}
+          </div>
+          <div className="font-light text-sm">
+            <Checkbox
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              name="aydinlatmaMetni"
+            />
+            <span
+              className="underline hover:cursor-pointer"
+              onClick={() => setShowAydinlatmaMetni(true)}
+            >
+              Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum.
+            </span>
+            {formik.errors.aydinlatmaMetni &&
+              formik.touched.aydinlatmaMetni && (
+                <div className="text-red-500">
+                  {formik.errors.aydinlatmaMetni}
+                </div>
+              )}
+          </div>
+        </div>
+        <div className="mt-12 flex justify-end w-full">
+          <Button type="submit" variant="outlined">
+            Kayıt Ol
+          </Button>
+        </div>
+        <UyelikSozlesmesi
+          visible={showUyelikSozlesmesi}
+          setVisible={setShowUyelikSozlesmesi}
+        />
+        <AydinlatmaMetniDialog
+          visible={showAydinlatmaMetni}
+          onHide={() => setShowAydinlatmaMetni(false)}
+        />
       </form>
     </div>
   );

@@ -51,10 +51,7 @@ function LoginPage() {
   return (
     <div className="flex w-full items-center justify-center h-screen ">
       <div>
-        <form
-          onSubmit={formik.handleSubmit}
-          className="w-96 bg-gray-100 rounded-2xl border p-12"
-        >
+        <form onSubmit={formik.handleSubmit} className="w-96    p-12">
           <div className="flex flex-col mb-4">
             <label htmlFor="email">E-posta:</label>
             <input
@@ -89,19 +86,18 @@ function LoginPage() {
             )}
           </div>
           <div className="flex justify-between">
-            <button
-              type="submit"
-              className="bg-blue-500 text-white p-2 rounded hover:cursor-pointer"
-            >
-              Giriş Yap
-            </button>
-
             <a
               className="bg-red-500 text-white p-2 rounded hover:cursor-pointer"
               onClick={() => router.push("/forgot-password")}
             >
               Şifremi Unuttum
             </a>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white p-2 rounded hover:cursor-pointer"
+            >
+              Giriş Yap
+            </button>
           </div>
         </form>
       </div>

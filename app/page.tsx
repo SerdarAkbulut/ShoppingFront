@@ -1,7 +1,5 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
 
-import request from "./api/client/request";
 import MainSlider from "./components/mainSlider";
 import LastProducts from "./components/lastProducts";
 import BestSeller from "./components/bestSeller";

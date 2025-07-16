@@ -39,9 +39,24 @@ function SideBar({
       <Divider />
 
       <List>
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => {
+              toggleDrawer(false)();
+              handleSelectCategory();
+            }}
+          >
+            <ListItemText primary="Tüm Ürünler" />
+          </ListItemButton>
+        </ListItem>
         {data?.map((item: any) => (
           <ListItem key={item.id} disablePadding>
-            <ListItemButton onClick={toggleDrawer(false)}>
+            <ListItemButton
+              onClick={() => {
+                toggleDrawer(false)();
+                handleSelectCategory(item.id, item.name);
+              }}
+            >
               <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>

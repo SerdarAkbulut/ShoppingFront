@@ -8,9 +8,9 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 function Footer() {
   return (
-    <div className="w-full bg-amber-300 p-5 mt-5 grid grid-cols-3">
+    <div className="w-full bg-amber-300 p-5 mt-5 md:grid md:grid-cols-3 flex-col">
       <div className="">
-        <h1 className="text-center">Sosyal Medya Hesaplarımız</h1>
+        <h1 className="text-center font-bold">Sosyal Medya Hesaplarımız</h1>
         <div className="flex justify-center gap-4">
           <a
             href="https://www.instagram.com/famelinmodayazici/"
@@ -43,10 +43,10 @@ function Footer() {
         </div>
       </div>
       <div>
-        <h1 className="text-center">Adresimiz </h1>
+        <h1 className="text-center font-bold">Adresimiz </h1>
       </div>
       <div>
-        <h1 className="text-center">İletişim Bilgileri</h1>
+        <h1 className="text-center font-bold">İletişim Bilgileri</h1>
         <div className="flex flex-col  gap-2 mt-4">
           <div className="flex justify-center">
             <Icon component={PhoneIcon} /> 0535 339 86 28
