@@ -3,6 +3,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import ConditionalLayout from "./conditionalLayout";
+import Footer from "./components/footer";
 
 export const metadata: Metadata = {
   title: {
@@ -68,8 +69,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className="h-full">
-      <body className=" min-h-screen">
+    <html lang="tr" className="h-full mh-h-screen">
+      <body className=" min-h-screen flex flex-col">
         <ConditionalLayout>{children}</ConditionalLayout>
 
         <ToastContainer
@@ -77,6 +78,7 @@ export default function RootLayout({
           hideProgressBar
           theme="colored"
         />
+        <Footer />
       </body>
     </html>
   );

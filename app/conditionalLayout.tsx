@@ -27,7 +27,6 @@ export default function ConditionalLayout({
     <ClientProviders>
       <Header />
       <main className="flex-grow">{children}</main>
-      <Footer />
     </ClientProviders>
   );
 }
