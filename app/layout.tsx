@@ -70,7 +70,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr" className="h-full mh-h-screen">
-      <body className=" min-h-screen flex flex-col">
+      <body className=" min-h-screen flex flex-col max-w-screen">
         <ConditionalLayout>{children}</ConditionalLayout>
 
         <ToastContainer

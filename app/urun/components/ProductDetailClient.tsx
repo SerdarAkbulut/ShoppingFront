@@ -56,58 +56,59 @@ export default function ProductDetailClient({ product }: { product: any }) {
       </h1>
       <div className="flex flex-col md:flex-row justify-center items-center gap-8   mt-5">
         <div className=" flex flex-col items-center  ">
-          <ProductImage images={product.images} />
-          <div className=" ">
-            <div className="lg:grid lg:grid-cols-5    mt-5 ">
-              <div className="flex flex-col lg:flex-row w-full  col-span-4  gap-4">
-                <FormControl fullWidth>
-                  <InputLabel>Renk</InputLabel>
-                  <Select
-                    value={selectedColorId}
-                    label="Renk"
-                    onChange={(e) => {
-                      setSelectedColorId(e.target.value);
-                      setSelectedSizeId(""); // beden sıfırlanır
-                    }}
-                  >
-                    {uniqueColors.map((color: any) => (
-                      <MenuItem key={color.id} value={color.id}>
-                        {color.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+          <div className="w-full max-w-md mx-auto overflow-hidden">
+            <ProductImage images={product.images} />
+          </div>
+          <div className="lg:grid lg:grid-cols-5  w-full  mt-5 ">
+            <div className="flex flex-col lg:flex-row w-full  col-span-4  gap-4">
+              <FormControl fullWidth>
+                <InputLabel>Renk</InputLabel>
+                <Select
+                  value={selectedColorId}
+                  label="Renk"
+                  onChange={(e) => {
+                    setSelectedColorId(e.target.value);
+                    setSelectedSizeId(""); // beden sıfırlanır
+                  }}
+                >
+                  {uniqueColors.map((color: any) => (
+                    <MenuItem key={color.id} value={color.id}>
+                      {color.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
-                <FormControl fullWidth>
-                  <InputLabel>Beden</InputLabel>
-                  <Select
-                    value={selectedSizeId}
-                    label="Beden"
-                    onChange={(e) => setSelectedSizeId(e.target.value)}
-                    disabled={!selectedColorId} // Renk seçilmemişse kapalı
-                  >
-                    {!selectedColorId ? (
-                      <MenuItem disabled value="">
-                        Lütfen önce bir renk seçin
+              <FormControl fullWidth>
+                <InputLabel>Beden</InputLabel>
+                <Select
+                  value={selectedSizeId}
+                  label="Beden"
+                  onChange={(e) => setSelectedSizeId(e.target.value)}
+                  disabled={!selectedColorId} // Renk seçilmemişse kapalı
+                >
+                  {!selectedColorId ? (
+                    <MenuItem disabled value="">
+                      Lütfen önce bir renk seçin
+                    </MenuItem>
+                  ) : (
+                    sizesForSelectedColor.map((size: any, index: number) => (
+                      <MenuItem key={index} value={size.id}>
+                        {size.name}
                       </MenuItem>
-                    ) : (
-                      sizesForSelectedColor.map((size: any, index: number) => (
-                        <MenuItem key={index} value={size.id}>
-                          {size.name}
-                        </MenuItem>
-                      ))
-                    )}
-                  </Select>
-                </FormControl>
-              </div>
-              <span className=" text-3xl font-bold   text-gray-900 text-center self-center">
-                {formatToCurrency(product.price)}
-              </span>
+                    ))
+                  )}
+                </Select>
+              </FormControl>
             </div>
-            <p className="mt-4 text-gray-600 text-lg">{product.description}</p>
-            <div className="mt-6 flex  justify-end">
-              <button
-                className="w-1/3 bg-[#FFFAE5]
+            <span className=" text-3xl font-bold   text-gray-900 text-center self-center">
+              {formatToCurrency(product.price)}
+            </span>
+          </div>
+          <p className="mt-4 text-gray-600 text-lg">{product.description}</p>
+          <div className="mt-6 flex  justify-end w-full">
+            <button
+              className="w-full md:w-1/3 bg-[#FFFAE5]
          text-[#5A3E36] 
          font-bold p-[5px] 
          rounded-md border-2 border-[#D2B48C]
@@ -115,19 +116,18 @@ export default function ProductDetailClient({ product }: { product: any }) {
           transition-all duration-500 ease-in-out
          
           "
-                color="inherit"
-                onClick={() =>
-                  mutate({
-                    productId: product.id,
-                    quantity: 1,
-                    renk: parseInt(selectedColorId),
-                    beden: parseInt(selectedSizeId),
-                  })
-                }
-              >
-                Sepete Ekle
-              </button>
-            </div>
+              color="inherit"
+              onClick={() =>
+                mutate({
+                  productId: product.id,
+                  quantity: 1,
+                  renk: parseInt(selectedColorId),
+                  beden: parseInt(selectedSizeId),
+                })
+              }
+            >
+              Sepete Ekle
+            </button>
           </div>
         </div>
       </div>

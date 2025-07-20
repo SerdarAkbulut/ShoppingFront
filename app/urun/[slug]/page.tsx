@@ -50,7 +50,7 @@ export default async function ProductDetailPage({ params }: Props) {
   if (!product) return notFound();
 
   return (
-    <div className="flex justify-center">
+    <div className="">
       <ProductDetailClient product={product} />
     </div>
   );

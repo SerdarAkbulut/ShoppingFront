@@ -56,7 +56,7 @@ function ProductImage({ images }: productImages) {
   };
 
   return (
-    <div className="w-3/4 max-w-md mx-auto">
+    <div className="w-full max-w-screen mx-auto overflow-hidden">
       <Swiper
         effect="flip"
         grabCursor={true}
@@ -98,7 +98,7 @@ function ProductImage({ images }: productImages) {
               src={selectedImage}
               alt="Zoomable"
               onClick={handleImageClick}
-              className="transition-transform duration-300 ease-in-out cursor-zoom-in object-cover "
+              className="transition-transform duration-300 ease-in-out cursor-zoom-in object-cover max-w-full "
               style={{
                 transform: zoomed ? "scale(2)" : "scale(1)",
                 transformOrigin: transformOrigin,
