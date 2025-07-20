@@ -28,33 +28,19 @@ const ProductCard: React.FC<productCard> = ({
   console.log(discount);
   return (
     <div className="flex flex-col bg-white shadow-lg border border-gray-500 rounded-2xl p-5 h-full">
-      <div className="border-b border-gray-200">
-        <Swiper
-          spaceBetween={30}
-          pagination={{ clickable: true }}
-          modules={[Pagination]}
-          className="mySwiper h-full"
-        >
-          {productImages?.map((item) => (
-            <SwiperSlide
-              key={item.imageUrl}
-              className="h-full flex items-center justify-center"
-            >
-              <img
-                src={item.imageUrl}
-                alt=""
-                className="w-full h-full  object-cover border-b hover:scale-110 rounded-lg "
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+      <div className="border-b border-gray-200 h-42 ">
+        <Link href={`/urun/${productId}-${slugify(name)}`}>
+          {productImages?.[0] && (
+            <img
+              src={productImages[0].imageUrl}
+              alt=""
+              className=" object-cover h-full border-b  rounded-lg"
+            />
+          )}
+        </Link>
       </div>
-      <Link
-        href={`/urun/${productId}-${slugify(name)}`}
-        className="flex mt-4 font-bold text-xl"
-      >
-        {name}
-      </Link>
+
+      {name}
       <div className="mt-4 flex flex-col gap-1">
         {discount !== null ? (
           <>
