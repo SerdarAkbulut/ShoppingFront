@@ -39,8 +39,7 @@ const ProductCard: React.FC<productCard> = ({
           )}
         </Link>
       </div>
-
-      {name}
+      <div className="flex justify-center font-semibold text-xl">{name}</div>
       <div className="mt-4 flex flex-col gap-1">
         {discount !== null ? (
           <>
