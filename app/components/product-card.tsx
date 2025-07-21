@@ -28,7 +28,7 @@ const ProductCard: React.FC<productCard> = ({
   console.log(discount);
   return (
     <div className="flex flex-col bg-white shadow-lg border border-gray-500 rounded-2xl p-5 h-full">
-      <div className="border-b border-gray-200 h-42 ">
+      <div className="border-b border-gray-200 h-42  flex  justify-center">
         <Link href={`/urun/${productId}-${slugify(name)}`}>
           {productImages?.[0] && (
             <img
