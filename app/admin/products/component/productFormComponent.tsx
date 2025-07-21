@@ -144,7 +144,8 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
           </Select>
         </FormControl>
         {productVariants?.map((variant, index) => (
-          <div key={index} className="flex gap-5">
+          <div key={index} className="flex flex-col gap-5 md:flex-row">
+            <span>Stok {index + 1}</span>
             <FormControl fullWidth variant="outlined">
               <InputLabel id={`beden-label-${index}`}>Beden</InputLabel>
               <Select
@@ -297,7 +298,7 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
           <div className="flex justify-end items-center mt-6">
             <Button
               variant="contained"
-              color="primary"
+              color="success"
               onClick={() => {
                 const payload = {
                   name: productName,
