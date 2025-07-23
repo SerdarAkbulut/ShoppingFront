@@ -56,21 +56,21 @@ function ProductImage({ images }: productImages) {
   };
 
   return (
-    <div className="w-full max-w-screen mx-auto overflow-hidden">
+    <div className="w-full max-w-screen mx-auto overflow-hidden px-2">
       <Swiper
         effect="flip"
         grabCursor={true}
         pagination={{ clickable: true }}
         navigation
         modules={[EffectFlip, Pagination, Navigation]}
-        className="mySwiper h-full"
+        className="mySwiper h-full px-4"
       >
         {images.map((item) => (
           <SwiperSlide key={item.imageUrl}>
             <img
               src={item.imageUrl}
               alt="Product"
-              className="h-96 w-full  object-cover rounded-3xl cursor-pointer"
+              className="h-96 w-full  object-cover rounded-3xl cursor-pointer "
               onClick={() => handleClickOpen(item.imageUrl)}
             />
           </SwiperSlide>
@@ -92,7 +92,7 @@ function ProductImage({ images }: productImages) {
           </button>
         </div>
         <div className="flex justify-center h-screen ">
-          <div ref={containerRef} className="w-7/12">
+          <div ref={containerRef} className="w-full flex">
             <img
               ref={imageRef}
               src={selectedImage}
