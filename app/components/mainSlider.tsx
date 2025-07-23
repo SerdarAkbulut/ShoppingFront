@@ -8,6 +8,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import { getSliders } from "../hooks/slider/useSlider";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+
 function MainSlider() {
   const { data } = getSliders();
   const role = useSelector((state: RootState) => state.role.role);
