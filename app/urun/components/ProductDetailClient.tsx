@@ -50,7 +50,7 @@ export default function ProductDetailClient({ product }: { product: any }) {
     .filter((v: any) => v.color.id === selectedColorId)
     .map((v: any) => v.size);
   return (
-    <div className="px-4 py-8 bg-[#FFF8F0] mx-auto  rounded-lg shadow-lg mt-10 w-full md:w-3/4 xl:w-1/2 ">
+    <div className="px-4 py-2 bg-[#FFF8F0] mx-auto  rounded-lg shadow-lg  w-full md:w-3/4 xl:w-1/2 ">
       <h1 className="text-4xl font-semibold text-center text-black ">
         {product.name}
       </h1>
