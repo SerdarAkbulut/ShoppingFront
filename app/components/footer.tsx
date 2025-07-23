@@ -19,27 +19,6 @@ function Footer() {
           >
             <Icon component={InstagramIcon} />
           </a>
-          <a
-            href="https://www.instagram.com/famelinmodayazici/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon component={FacebookIcon} />
-          </a>
-          <a
-            href="https://www.instagram.com/famelinmodayazici/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon component={XIcon} />
-          </a>
-          <a
-            href="https://www.instagram.com/famelinmodayazici/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon component={PinterestIcon} />
-          </a>
         </div>
       </div>
       <div>

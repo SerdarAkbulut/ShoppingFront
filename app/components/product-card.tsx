@@ -27,9 +27,9 @@ const ProductCard: React.FC<productCard> = ({
 }) => {
   console.log(discount);
   return (
-    <div className="flex flex-col bg-white shadow-lg border border-gray-500 rounded-2xl p-2 h-full">
-      <div className="border-b border-gray-200 h-42  flex  justify-center">
-        <Link href={`/urun/${productId}-${slugify(name)}`}>
+    <Link href={`/urun/${productId}-${slugify(name)}`}>
+      <div className="flex flex-col bg-white shadow-lg border border-gray-500 rounded-2xl p-2 h-full">
+        <div className="border-b border-gray-200 h-42  flex  justify-center">
           {productImages?.[0] && (
             <img
               src={productImages[0].imageUrl}
@@ -37,20 +37,22 @@ const ProductCard: React.FC<productCard> = ({
               className=" object-cover h-full border-b  rounded-lg"
             />
           )}
-        </Link>
+        </div>
+        <div className="flex justify-center font-semibold text-xl">{name}</div>
+        <div className="mt-4 flex flex-col gap-1">
+          {discount !== null ? (
+            <>
+              <div className="line-through">{formatToCurrency(price)} </div>
+              <div className="font-bold">
+                {formatToCurrency(discount || 0)}{" "}
+              </div>
+            </>
+          ) : (
+            <div>{formatToCurrency(price)} </div>
+          )}
+        </div>
       </div>
-      <div className="flex justify-center font-semibold text-xl">{name}</div>
-      <div className="mt-4 flex flex-col gap-1">
-        {discount !== null ? (
-          <>
-            <div className="line-through">{formatToCurrency(price)} </div>
-            <div className="font-bold">{formatToCurrency(discount || 0)} </div>
-          </>
-        ) : (
-          <div>{formatToCurrency(price)} </div>
-        )}
-      </div>
-    </div>
+    </Link>
   );
 };
 

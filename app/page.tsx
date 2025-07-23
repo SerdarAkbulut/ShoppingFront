@@ -12,7 +12,7 @@ export default function Home() {
           <MainSlider />
         </div>
       </div>
-      <div className="mt-5 px-5">
+      <div className="mt-5 px-2">
         <h1 className="font-extrabold text-2xl ml-5">Yeni Ürünler</h1>
 
         <LastProducts></LastProducts>

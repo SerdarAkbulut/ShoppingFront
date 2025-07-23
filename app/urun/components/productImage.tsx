@@ -70,7 +70,7 @@ function ProductImage({ images }: productImages) {
             <img
               src={item.imageUrl}
               alt="Product"
-              className="h-[600px] w-full object-cover rounded-3xl cursor-pointer"
+              className="h-96 w-full  object-cover rounded-3xl cursor-pointer"
               onClick={() => handleClickOpen(item.imageUrl)}
             />
           </SwiperSlide>
