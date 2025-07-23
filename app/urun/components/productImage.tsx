@@ -70,7 +70,7 @@ function ProductImage({ images }: productImages) {
             <img
               src={item.imageUrl}
               alt="Product"
-              className="h-96 w-full  object-cover rounded-3xl cursor-pointer "
+              className="h-96 md:h-[500px] lg:h-[600px] w-full  object-cover rounded-3xl cursor-pointer "
               onClick={() => handleClickOpen(item.imageUrl)}
             />
           </SwiperSlide>
@@ -92,7 +92,7 @@ function ProductImage({ images }: productImages) {
           </button>
         </div>
         <div className="flex justify-center h-screen ">
-          <div ref={containerRef} className="w-full flex">
+          <div ref={containerRef} className="w-full flex justify-center">
             <img
               ref={imageRef}
               src={selectedImage}
