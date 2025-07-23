@@ -41,7 +41,7 @@ function Header() {
 
   return (
     <div className="w-full ">
-      <div className="w-full  2xl:px-52 xl:px-40 lg:px-32 md:px-20 sm:px-10 py-5 flex justify-between">
+      <div className="w-full  2xl:px-52 xl:px-40 lg:px-32 md:px-20 sm:px-10 py-5 px-5 flex justify-between">
         <div className="lg:block hidden" id="logo">
           <Button
             LinkComponent={"a"}
