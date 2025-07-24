@@ -1,4 +1,5 @@
-import { get } from "http";
+"use client";
+
 import React from "react";
 import { getBestSellers } from "../hooks/products/useProducts";
 import ProductCard from "./product-card";
