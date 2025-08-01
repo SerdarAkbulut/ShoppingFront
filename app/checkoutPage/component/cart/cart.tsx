@@ -7,12 +7,13 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import request from "../../../api/client/request";
 import { updateCart } from "../../../components/updateCart";
 import { setOrder } from "app/store/order/orderSlice";
+import { setAnonOrder } from "app/store/anonOrder/anonOrderSlice";
 
 function CartPage() {
   const cart = useSelector((state: RootState) => state.cart.cart);
   const { refetch } = updateCart();
   const dispatch = useDispatch();
-
+  const anontoken = localStorage.getItem("anonToken");
   const { mutate: addItemToCart } = useMutation({
     mutationFn: ({
       productId,
@@ -31,10 +32,14 @@ function CartPage() {
     mutationFn: ({
       productId,
       quantity,
+      colorId,
+      sizeId,
     }: {
       productId: number;
       quantity: number;
-    }) => request.Cart.deleteItem(productId, quantity),
+      colorId: number;
+      sizeId: number;
+    }) => request.Cart.deleteItem(productId, quantity, colorId, sizeId),
     onSuccess: () => refetch(),
   });
   const totalPrice = cart?.cartItems.reduce(
@@ -46,6 +51,14 @@ function CartPage() {
     dispatch(
       setOrder({ orderProducts: cart?.cartItems, orderTotal: totalPrice })
     );
+    if (anontoken) {
+      dispatch(
+        setAnonOrder({
+          OrderItems: cart?.cartItems,
+          anonOrderTotal: totalPrice,
+        })
+      );
+    }
   }, [totalPrice]);
 
   return (
@@ -69,7 +82,12 @@ function CartPage() {
               <Button
                 className="px-2 py-1 bg-cyan-600 text-white rounded hover:bg-cyan-700 transition"
                 onClick={() =>
-                  deleteItemToCart({ productId: item.productId, quantity: 1 })
+                  deleteItemToCart({
+                    productId: item.productId,
+                    quantity: 1,
+                    colorId: item.color.id,
+                    sizeId: item.size.id,
+                  })
                 }
                 sx={{
                   ":hover": {

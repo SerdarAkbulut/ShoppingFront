@@ -34,7 +34,6 @@ function UserInfo() {
     },
   });
   const { data, refetch } = getUserDetails();
-  console.log(data);
   return (
     <div className="flex justify-center">
       <div className="my-20">

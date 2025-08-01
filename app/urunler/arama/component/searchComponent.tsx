@@ -9,7 +9,6 @@ import React from "react";
 function SearchComponent({ q, page }: { q: string; page: any }) {
   const { data, isLoading, isError } = useSearchProducts(q, page);
   const router = useRouter();
-  console.log(data);
   if (isLoading) return <div>Yükleniyor...</div>;
   if (isError) return <div>Bir hata oluştu.</div>;
   const handlePageChange = (page: number) => {

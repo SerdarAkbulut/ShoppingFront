@@ -11,12 +11,25 @@ import { toast } from "react-toastify";
 import { RootState } from "app/store/store";
 import CartPage from "./cart/cart";
 import request from "app/api/client/request";
+import AnonAddress from "./anonAddress/anonAddress";
 
 function StepperComponent() {
   const stepperRef = useRef<any>(null);
   const order = useSelector((state: RootState) => state.order);
+  const anonOrder = useSelector((state: RootState) => state.anonOrderSlice);
   const cart = useSelector((state: RootState) => state.cart.cart?.cartItems);
-
+  const anontoken = localStorage.getItem("anonToken");
+  const { mutate: anonOrderMutate } = useMutation({
+    mutationFn: () => request.Order.createAnonOrder(anonOrder),
+    onSuccess: () => {
+      toast.success(" siparişiniz başarıyla oluşturuldu.");
+      stepperRef.current?.nextCallback();
+    },
+    onError: (error: any) => {
+      const message = error?.response?.data.message;
+      toast.error(message);
+    },
+  });
   const { mutate } = useMutation({
     mutationFn: ({ adressId, card, orderItems }: any) =>
       request.Order.createOrder({ adressId, card, orderItems }),
@@ -37,7 +50,10 @@ function StepperComponent() {
       orderItems: cart,
     });
   };
-
+  const isAddressValid = () => {
+    const address = anonOrder.anonAddress;
+    return Object.values(address).every((val) => val !== "" && val !== null);
+  };
   return (
     <div className="card flex">
       <Stepper ref={stepperRef} className="w-[700px]" linear>
@@ -54,27 +70,49 @@ function StepperComponent() {
             />
           </div>
         </StepperPanel>
-
-        <StepperPanel header="Sipariş Adresi">
-          <div className="flex flex-column">
-            <Address />
-          </div>
-          <div className="flex pt-4 justify-between">
-            <Button
-              label="Geri"
-              severity="secondary"
-              icon="pi pi-arrow-left"
-              onClick={() => stepperRef.current?.prevCallback()}
-            />
-            <Button
-              label="İleri"
-              icon="pi pi-arrow-right"
-              iconPos="right"
-              onClick={() => stepperRef.current?.nextCallback()}
-              disabled={!order.orderAddress}
-            />
-          </div>
-        </StepperPanel>
+        {anontoken ? (
+          <StepperPanel header="Sipariş Adresi">
+            <div className="flex flex-column">
+              <AnonAddress />
+            </div>
+            <div className="flex pt-4 justify-between">
+              <Button
+                label="Geri"
+                severity="secondary"
+                icon="pi pi-arrow-left"
+                onClick={() => stepperRef.current?.prevCallback()}
+              />
+              <Button
+                label="İleri"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                onClick={() => stepperRef.current?.nextCallback()}
+                disabled={!isAddressValid()}
+              />
+            </div>
+          </StepperPanel>
+        ) : (
+          <StepperPanel header="Sipariş Adresi">
+            <div className="flex flex-column">
+              <Address />
+            </div>
+            <div className="flex pt-4 justify-between">
+              <Button
+                label="Geri"
+                severity="secondary"
+                icon="pi pi-arrow-left"
+                onClick={() => stepperRef.current?.prevCallback()}
+              />
+              <Button
+                label="İleri"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                onClick={() => stepperRef.current?.nextCallback()}
+                disabled={!order.orderAddress}
+              />
+            </div>
+          </StepperPanel>
+        )}
 
         <StepperPanel header="Ödeme">
           <div className="flex justify-center">
@@ -87,12 +125,25 @@ function StepperComponent() {
               icon="pi pi-arrow-left"
               onClick={() => stepperRef.current?.prevCallback()}
             />
-            <Button
-              label="Siparişi Ver"
-              severity="success"
-              icon="pi pi-check"
-              onClick={handleCreateOrder}
-            />
+            {anontoken ? (
+              <>
+                <Button
+                  label="Siparişi Ver"
+                  severity="success"
+                  icon="pi pi-check"
+                  onClick={() => anonOrderMutate()}
+                />
+              </>
+            ) : (
+              <>
+                <Button
+                  label="Siparişi Ver"
+                  severity="success"
+                  icon="pi pi-check"
+                  onClick={handleCreateOrder}
+                />
+              </>
+            )}
           </div>
         </StepperPanel>
       </Stepper>

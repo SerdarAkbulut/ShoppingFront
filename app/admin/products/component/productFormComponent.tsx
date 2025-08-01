@@ -73,7 +73,6 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
     setCategoryName(value.map((id) => ({ categoryId: id })));
   };
   const getSelectedCategoryIds = () => categoryName.map((c) => c.categoryId);
-  console.log(product, "product");
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",

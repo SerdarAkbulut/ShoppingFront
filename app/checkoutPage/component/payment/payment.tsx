@@ -13,6 +13,7 @@ import {
 import { RootState } from "app/store/store";
 import { getInstallmentOptions } from "app/hooks/products/useProducts";
 import { setOrder } from "app/store/order/orderSlice";
+import { setAnonOrder } from "app/store/anonOrder/anonOrderSlice";
 
 function Payment() {
   const dispatch = useDispatch();
@@ -37,6 +38,8 @@ function Payment() {
   const handleChange = (event: SelectChangeEvent) => {
     setInstallment(event.target.value as string);
   };
+  const anontoken = localStorage.getItem("anonToken");
+
   useEffect(() => {
     dispatch(
       setOrder({
@@ -50,8 +53,21 @@ function Payment() {
         },
       })
     );
+    if (anontoken) {
+      dispatch(
+        setAnonOrder({
+          card: {
+            CardHolderName,
+            cardNumber,
+            expireYear,
+            expireMonth,
+            cvc,
+            installment: installment,
+          },
+        })
+      );
+    }
   }, [CardHolderName, cardNumber, expireYear, expireMonth, cvc, installment]);
-  console.log(installment);
 
   return (
     <div className="flex justify-center">

@@ -1,6 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { create } from "domain";
 
-axios.defaults.baseURL = "https://api.famelinmodayazici.com.tr/api/";
+// axios.defaults.baseURL = "https://api.famelinmodayazici.com.tr/api/";
+axios.defaults.baseURL = "https://localhost:7277/api/";
 
 axios.interceptors.response.use(
   (response) => response,
@@ -12,9 +14,16 @@ axios.interceptors.response.use(
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const anonToken = localStorage.getItem("anonToken");
+
+    if (config.headers) {
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      } else if (anonToken) {
+        config.headers.Authorization = `Bearer ${anonToken}`;
+      }
     }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -87,9 +96,14 @@ const Cart = {
       `cart/add?productId=${productId}&quantity=${quantity}&colorId=${colorId}&sizeId=${sizeId}`,
       {}
     ),
-  deleteItem: (productId: number, quantity: number) =>
+  deleteItem: (
+    productId: number,
+    quantity: number,
+    colorId: number,
+    sizeId: number
+  ) =>
     queries.delete(
-      `cart/deleteItem?productId=${productId}&quantity=${quantity}`
+      `cart/deleteItem?productId=${productId}&quantity=${quantity}&colorId=${colorId}&sizeId=${sizeId}`
     ),
 };
 
@@ -108,6 +122,7 @@ const User = {
   checkToken: (email: string, token: string) =>
     queries.get(`user/check-token?email=${email}&token=${token}`),
   ResetPassword: (values: any) => queries.post("user/reset-password", values),
+  getUserLogin: () => queries.get(`user`),
 };
 
 const Category = {
@@ -126,6 +141,7 @@ const Order = {
   getInstallments: (values: { bin: string; price: string }) =>
     queries.get(`order/installment-options/${values.bin}/${values.price}`),
   getOrderDetails: (id: number) => queries.get(`order/${id}`),
+  createAnonOrder: (values: any) => queries.post("order/anon-order", values),
 };
 
 const request = {

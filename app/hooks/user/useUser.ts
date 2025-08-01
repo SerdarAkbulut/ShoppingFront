@@ -38,3 +38,11 @@ export const resetPassword = () => {
     },
   });
 };
+
+export const getUserLogin = () => {
+  return useQuery({
+    queryKey: ["userLoginController"],
+    queryFn: () => request.User.getUserLogin(),
+    staleTime: Infinity,
+  });
+};

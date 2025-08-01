@@ -10,6 +10,7 @@ import SearchProduct from "./search";
 import MenuIcon from "@mui/icons-material/Menu";
 import SideBar from "./sidebar";
 import Navbar from "./navbar";
+import { getUserLogin } from "app/hooks/user/useUser";
 
 function Header() {
   const token = useSelector((state: RootState) => state.token.token);
@@ -19,7 +20,7 @@ function Header() {
   const open = Boolean(anchorEl);
   const [openSidebar, setOpenSidebar] = useState(false);
   const itemCount =
-    cart?.cartItems.reduce(
+    cart?.cartItems?.reduce(
       (total: any, item: any) => total + item.quantity,
       0
     ) || 0;
@@ -32,6 +33,7 @@ function Header() {
   const handleOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("userName");
     window.location.reload();
     setAnchorEl(null);
   };
@@ -64,7 +66,18 @@ function Header() {
         <div className="lg:flex hidden  lg:self-center" id="search">
           <SearchProduct />
         </div>
-        <div id="user-info">
+        <div id="user-info" className="flex items-center gap-4">
+          <div className="relative w-10 h-10 flex  ">
+            {itemCount > 0 && (
+              <span className="absolute -bottom-4 -right-12 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full shadow">
+                {itemCount}
+              </span>
+            )}
+          </div>
+          <Link href="/checkoutPage">
+            <ShoppingCartIcon className="w-6 h-6 text-gray-700 hover:cursor-pointer" />
+          </Link>
+
           {token === null ? (
             <div className="flex justify-end gap-4 self-center">
               <div>
@@ -116,17 +129,6 @@ function Header() {
                 <MenuItem onClick={handleClose}>Değerlendirmelerim</MenuItem>
                 <MenuItem onClick={handleOut}>Çıkış</MenuItem>
               </Menu>
-              <div className="relative w-10 h-10 flex items-center justify-center">
-                <Link href="/checkoutPage">
-                  <ShoppingCartIcon className="w-6 h-6 text-gray-700 hover:cursor-pointer" />
-                </Link>
-
-                {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full shadow">
-                    {itemCount}
-                  </span>
-                )}
-              </div>
             </div>
           )}
         </div>

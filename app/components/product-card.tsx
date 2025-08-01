@@ -25,7 +25,6 @@ const ProductCard: React.FC<productCard> = ({
   productId,
   discount,
 }) => {
-  console.log(discount);
   return (
     <Link href={`/urun/${productId}-${slugify(name)}`}>
       <div className="flex flex-col bg-white shadow-lg border border-gray-500 rounded-2xl p-2 h-full">

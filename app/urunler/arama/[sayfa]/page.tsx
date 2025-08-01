@@ -10,8 +10,6 @@ const Arama = () => {
   const q = searchParams.get("q") ?? "";
   const sayfa = params.sayfa; // URL'deki dinamik segment
 
-  console.log("sayfa param:", sayfa);
-
   if (!q) {
     return (
       <div className="flex justify-center items-center h-screen">

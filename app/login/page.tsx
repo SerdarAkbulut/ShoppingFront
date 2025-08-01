@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setToken } from "../store/token/tokenSlice";
 import { setRole } from "../store/role/roleSlice";
-import Router from "next/router";
 import { toast } from "react-toastify";
 
 function LoginPage() {
@@ -19,6 +18,10 @@ function LoginPage() {
       request.User.login(values),
 
     onSuccess: (data) => {
+      localStorage.removeItem("anonToken");
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("userName");
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.user.role);
       localStorage.setItem("userName", data.user.userName);

@@ -5,6 +5,8 @@ import tokenSlice from "./token/tokenSlice";
 import roleSlice from "./role/roleSlice";
 import { orderSlice } from "./order/orderSlice";
 import { categorySlice } from "./categoy/categorySlice";
+import anonTokenSlice from "./anonToken/anonTokenSlice";
+import { anonOrderSlice } from "./anonOrder/anonOrderSlice";
 export const store = configureStore({
   reducer: {
     counter: counterSlice.reducer,
@@ -13,6 +15,8 @@ export const store = configureStore({
     role: roleSlice.reducer,
     order: orderSlice.reducer,
     category: categorySlice.reducer,
+    anonToken: anonTokenSlice.reducer,
+    anonOrderSlice: anonOrderSlice.reducer,
   },
 });
 

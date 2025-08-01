@@ -14,7 +14,6 @@ import { RootState } from "../store/store";
 function MainSlider() {
   const { data } = getSliders();
   const role = useSelector((state: RootState) => state.role.role);
-  console.log(role, "role");
   return (
     <>
       {role === "Admin" ? (

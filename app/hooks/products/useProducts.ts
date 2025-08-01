@@ -54,7 +54,6 @@ export async function getFetchProductsByCategory(
     if (!res.ok) return null;
 
     const product = await res.json();
-    console.log(product);
     return product;
   } catch (error) {
     console.error("fetchProduct error:", error);

@@ -43,7 +43,7 @@ export default function ProductDetailClient({ product }: { product: any }) {
       });
     },
     onError: () => {
-      toast.error("Lütfen Giriş Yapın");
+      toast.error("Bilinmeyen bir hata oluştu");
     },
   });
   const sizesForSelectedColor = product.productVariants
@@ -108,14 +108,16 @@ export default function ProductDetailClient({ product }: { product: any }) {
           <p className="mt-4 text-gray-600 text-lg">{product.description}</p>
           <div className="mt-6 flex  justify-end w-full">
             <button
-              className="w-full md:w-1/3 bg-[#FFFAE5]
+              className={`w-full md:w-1/3 bg-[#FFFAE5]
          text-[#5A3E36] 
          font-bold p-[5px] 
          rounded-md border-2 border-[#D2B48C]
           hover:cursor-pointer hover:bg-[#FFD700]
-          transition-all duration-500 ease-in-out
-         
-          "
+          transition-all duration-500 ease-in-out ${
+            !selectedColorId || !selectedSizeId
+              ? "opacity-50 cursor-not-allowed hover:bg-[#FFFAE5] hover:cursor-none"
+              : ""
+          }`}
               color="inherit"
               onClick={() =>
                 mutate({
@@ -125,6 +127,7 @@ export default function ProductDetailClient({ product }: { product: any }) {
                   beden: parseInt(selectedSizeId),
                 })
               }
+              disabled={!selectedColorId || !selectedSizeId}
             >
               Sepete Ekle
             </button>
