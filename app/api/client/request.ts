@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { create } from "domain";
 
-// axios.defaults.baseURL = "https://api.famelinmodayazici.com.tr/api/";
-axios.defaults.baseURL = "https://localhost:7277/api/";
+axios.defaults.baseURL = "https://api.famelinmodayazici.com.tr/api/";
+// axios.defaults.baseURL = "https://localhost:7277/api/";
 
 axios.interceptors.response.use(
   (response) => response,
