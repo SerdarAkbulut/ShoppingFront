@@ -48,7 +48,7 @@ function ProductsPage() {
           </Button>
           <Button
             onClick={() => goToPage(page + 1)}
-            disabled={!data.hasNextPage}
+            disabled={!data?.hasNextPage}
           >
             İleri
           </Button>
