@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Famelin Moda Yazıcı",
-    description: "Kendi tarzınızı yaratın – Famelin Moda Yazıcı ile!",
+    description: "Famelin Moda Yazıcı",
     site: "@famelinresmi",
     creator: "@famelinresmi",
     images: ["https://famelin.com/twitter-image.jpg"],

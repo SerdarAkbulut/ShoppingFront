@@ -70,9 +70,9 @@ function Payment() {
   }, [CardHolderName, cardNumber, expireYear, expireMonth, cvc, installment]);
 
   return (
-    <div className="flex justify-center">
-      <form className="flex flex-col gap-10">
-        <div className="flex gap-4">
+    <div className="flex justify-center max-w-full">
+      <form className="flex flex-col md:flex gap-10    ">
+        <div className="flex flex-col md:flex-row gap-4">
           <InputText
             placeholder="Kart Sahibi"
             value={CardHolderName}
@@ -87,13 +87,13 @@ function Payment() {
             className="p-inputtext"
           />
         </div>
-        <div className="flex gap-4 items-end">
+        <div className="flex flex-col w-full gap-4 md:flex-row items-end">
           <InputMask
             mask="99/99"
             placeholder="Son Kullanma Tarihi"
             value={expiryDate}
             onChange={(e) => setExpiryDate(e.target.value || "")}
-            className="p-inputtext"
+            className="p-inputtext w-full"
           />
           <InputText
             type="number"
@@ -101,7 +101,7 @@ function Payment() {
             value={cvc}
             onChange={(e) => setCvc(e.target.value)}
             maxLength={3}
-            className="p-inputtext"
+            className="p-inputtext w-full"
           />
         </div>
         {data?.installmentDetails?.map((items: any, index: number) => (
@@ -147,7 +147,7 @@ function Payment() {
             <div className="col-span-3 justify-end ">
               <div className="flex justify-end">
                 {items?.installmentPrices?.length > 1 && (
-                  <FormControl className="w-1/3 " variant="standard">
+                  <FormControl className="md:w-1/3 w-1/2 " variant="standard">
                     <InputLabel id="demo-simple-select">Taksit</InputLabel>
                     <Select
                       labelId="demo-simple-select"

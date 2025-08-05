@@ -51,7 +51,7 @@ function AddUserAdress({ open, onClose }: SimpleDialogProps) {
   });
   return (
     <Dialog open={open} onClose={onClose}>
-      <div className=" h-full  flex justify-center items-center p-20  ">
+      <div className=" h-full  flex justify-center items-center p-5 lg:p-20  ">
         <form
           className="grid grid-cols-2 gap-5 "
           onSubmit={formik.handleSubmit}

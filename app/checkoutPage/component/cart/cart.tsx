@@ -8,6 +8,7 @@ import request from "../../../api/client/request";
 import { updateCart } from "../../../components/updateCart";
 import { setOrder } from "app/store/order/orderSlice";
 import { setAnonOrder } from "app/store/anonOrder/anonOrderSlice";
+import { formatToCurrency } from "app/utils/slugify";
 
 function CartPage() {
   const cart = useSelector((state: RootState) => state.cart.cart);
@@ -63,16 +64,16 @@ function CartPage() {
 
   return (
     <div className="flex w-full  items-center justify-center bg-gray-100">
-      <div className="bg-white p-8  shadow-lg w-full max-w-2xl">
+      <div className="bg-white   shadow-lg w-full max-w-2xl">
         {cart?.cartItems.map((item: any, index: any) => (
           <div
             key={item.productId + index}
-            className="grid grid-cols-4 p-4 mb-4 bg-cyan-100  shadow-sm"
+            className="grid grid-cols-2 p-4 mb-4 bg-cyan-100  shadow-sm"
           >
-            <div className="text-lg font-medium text-gray-700 flex items-center">
+            <div className="text-lg font-medium text-gray-700 flex items-center justify-center">
               {item.name}
             </div>
-            <div className="text-lg font-medium text-gray-700 flex items-center">
+            <div className="text-lg font-medium text-gray-700 flex items-center justify-center">
               {item.color.name} / {item.size.name}
             </div>
             <div className="text-gray-600 flex items-center justify-center">
@@ -123,8 +124,10 @@ function CartPage() {
         ))}
 
         <div className="grid grid-cols-4">
-          <div className="text-xl font-bold">Toplam Fiyat</div>
-          <div className=" text-center ml-3 col-span-3">{totalPrice} ₺</div>
+          <div className="text-xl font-bold mx-5">Toplam Fiyat</div>
+          <div className=" text-center ml-3 col-span-3 flex justify-end items-center mr-10">
+            {formatToCurrency(totalPrice)}
+          </div>
         </div>
       </div>
     </div>

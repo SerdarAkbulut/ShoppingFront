@@ -55,8 +55,8 @@ function StepperComponent() {
     return Object.values(address).every((val) => val !== "" && val !== null);
   };
   return (
-    <div className="card flex">
-      <Stepper ref={stepperRef} className="w-[700px]" linear>
+    <div className="card flex overflow-hidden ">
+      <Stepper ref={stepperRef} className="max-w-full" linear>
         <StepperPanel header="Sipariş Bilgileri">
           <div className="h-[400px] w-full">
             <CartPage />
