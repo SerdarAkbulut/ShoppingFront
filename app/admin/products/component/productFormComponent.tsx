@@ -21,8 +21,9 @@ import { toast } from "react-toastify";
 import { convertToBase64, formatToCurrency } from "app/utils/slugify";
 import request from "app/api/client/request";
 import ProductVariantsTable from "./variants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "app/store/store";
+import { setOrder } from "app/store/order/orderSlice";
 
 interface ProductProps {
   product?: any;
@@ -63,10 +64,19 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
       setProductVariants(orderVariants);
     }
   }, [product, orderVariants]);
-
+  const dispatch = useDispatch();
   const { mutate: addProduct } = useMutation({
     mutationFn: (values: any) => request.Product.add(values),
-    onSuccess: () => toast.success("Ürün eklendi"),
+    onSuccess: () => {
+      toast.success("Ürün eklendi");
+      setProductName("");
+      setPrice("");
+      setDescription("");
+      setCategoryName([]);
+      setImageUrls([]);
+      setProductVariants([]);
+      dispatch(setOrder({ variants: [] }));
+    },
     onError: (err: AxiosError) => console.error(err),
   });
 
