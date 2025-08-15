@@ -85,7 +85,7 @@ const ProductVariantsTable: React.FC = () => {
 
   return (
     <>
-      <div className="flex gap-5">
+      <div className="flex gap-5 flex-wrap">
         {sizes?.map((size: Size) => (
           <label
             key={size.id}
