@@ -13,7 +13,7 @@ interface ProductProps {
   product: {
     id: number;
     name: string;
-    price: number;
+    price: string;
     description: string;
     productCategories: { categoryId: number; id: number }[];
     images: { imageUrl: string; id: number }[];
@@ -25,7 +25,6 @@ interface ProductProps {
     }[];
   };
 }
-
 function EditProduct({ open, onClose, product }: SimpleDialogProps) {
   return (
     <div className="flex flex-col gap-3 w-full">

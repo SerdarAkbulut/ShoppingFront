@@ -12,6 +12,7 @@ interface OrderState {
     cvc: string;
     installment: string;
   };
+  variants: { sizeId: number; colorId: number; stock: number }[];
 }
 
 const initialState: OrderState = {
@@ -26,6 +27,7 @@ const initialState: OrderState = {
     cvc: "",
     installment: "",
   },
+  variants: [],
 };
 
 export const orderSlice = createSlice({
@@ -35,6 +37,9 @@ export const orderSlice = createSlice({
     setOrder: (state, action: PayloadAction<Partial<OrderState>>) => {
       if (action.payload.orderProducts) {
         state.orderProducts = action.payload.orderProducts;
+      }
+      if (action.payload.variants) {
+        state.variants = action.payload.variants;
       }
       if (action.payload.orderAddress) {
         state.orderAddress = action.payload.orderAddress;

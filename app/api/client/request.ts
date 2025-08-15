@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { get } from "http";
 
 axios.defaults.baseURL = "https://api.famelinmodayazici.com.tr/api/";
 // axios.defaults.baseURL = "https://localhost:7277/api/";
@@ -81,6 +82,8 @@ const Product = {
     queries.put(`products/add-discount/${productId}/${discount}`, {}),
   deleteDiscount: (productId: number) =>
     queries.delete(`products/delete-discount/${productId}`),
+  getColors: () => queries.get("products/get-color"),
+  getSizes: () => queries.get("products/get-size"),
 };
 
 const Cart = {

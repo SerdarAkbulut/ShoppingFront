@@ -123,3 +123,16 @@ export const addDiscount = () => {
     },
   });
 };
+
+export const getColors = () => {
+  return useQuery({
+    queryKey: ["colors"],
+    queryFn: () => request.Product.getColors(),
+  });
+};
+export const getSizes = () => {
+  return useQuery({
+    queryKey: ["sizes"],
+    queryFn: () => request.Product.getSizes(),
+  });
+};

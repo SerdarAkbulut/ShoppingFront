@@ -20,6 +20,9 @@ import Discount from "./discount";
 import { toast } from "react-toastify";
 import { convertToBase64, formatToCurrency } from "app/utils/slugify";
 import request from "app/api/client/request";
+import ProductVariantsTable from "./variants";
+import { useSelector } from "react-redux";
+import { RootState } from "app/store/store";
 
 interface ProductProps {
   product?: any;
@@ -34,25 +37,32 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
   const [categoryName, setCategoryName] = useState<{ categoryId: number }[]>(
     product?.productCategories || []
   );
+  const convertedPrice = product?.price.replace(".", "").replace(",", ".");
+  const orderVariants = useSelector((state: RootState) => state.order.variants);
+
   const [productName, setProductName] = useState(product?.name || "");
-  const [price, setPrice] = useState(product?.price || "");
+  const [price, setPrice] = useState(convertedPrice || "");
   const [description, setDescription] = useState(product?.description || "");
   const [productVariants, setProductVariants] = useState<
     { sizeId: number; colorId: number; stock: number }[]
-  >(product?.productVariants || []);
+  >(product?.productVariants || orderVariants);
   const [imageUrls, setImageUrls] = useState<{ imageUrl: string }[]>(
     product?.images || []
   );
+  console.log(productVariants, "product");
+
   useEffect(() => {
     if (product) {
       setProductName(product.name);
-      setPrice(product.price);
+      setPrice(convertedPrice);
       setDescription(product.description);
       setCategoryName(product.productCategories || []);
       setImageUrls(product.images || []);
       setProductVariants(product.productVariants || []);
+    } else {
+      setProductVariants(orderVariants);
     }
-  }, [product]);
+  }, [product, orderVariants]);
 
   const { mutate: addProduct } = useMutation({
     mutationFn: (values: any) => request.Product.add(values),
@@ -142,90 +152,8 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
             ))}
           </Select>
         </FormControl>
-        {productVariants?.map((variant, index) => (
-          <div key={index} className="flex flex-col gap-5 md:flex-row">
-            <span>Stok {index + 1}</span>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id={`beden-label-${index}`}>Beden</InputLabel>
-              <Select
-                labelId={`beden-label-${index}`}
-                id={`beden-select-${index}`}
-                value={variant.sizeId}
-                onChange={(e) => {
-                  const updated = [...productVariants];
-                  updated[index].sizeId = Number(e.target.value);
-                  setProductVariants(updated);
-                }}
-                label="Beden" // bu önemli!
-              >
-                {data?.sizes?.map((s: any) => (
-                  <MenuItem key={s.id} value={s.id}>
-                    {s.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
 
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id={`color-label-${index}`}>Renk</InputLabel>
-              <Select
-                labelId={`color-label-${index}`}
-                id={`color-select-${index}`}
-                value={variant.colorId}
-                onChange={(e) => {
-                  const updated = [...productVariants];
-                  updated[index].colorId = Number(e.target.value);
-                  setProductVariants(updated);
-                }}
-                label="Color"
-              >
-                {data?.colors?.map((c: any) => (
-                  <MenuItem key={c.id} value={c.id}>
-                    {c.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <TextField
-              variant="standard"
-              type="number"
-              label="Stok"
-              value={variant.stock}
-              onChange={(e) => {
-                const updated = [...productVariants];
-                updated[index].stock = Number(e.target.value);
-                setProductVariants(updated);
-              }}
-              fullWidth
-            />
-            <div className="self-center">
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={() => {
-                  const updated = [...productVariants];
-                  updated.splice(index, 1);
-                  setProductVariants(updated);
-                }}
-              >
-                Sil
-              </Button>
-            </div>
-          </div>
-        ))}
-
-        <Button
-          onClick={() =>
-            setProductVariants([
-              ...productVariants,
-              { sizeId: 0, colorId: 0, stock: 0 },
-            ])
-          }
-        >
-          Stok Ekle
-        </Button>
-
+        <ProductVariantsTable />
         <Button
           component="label"
           variant="contained"
