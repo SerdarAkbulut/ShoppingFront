@@ -78,7 +78,7 @@ const ProductVariantsTable: React.FC = () => {
           ? { ...v, stock: value }
           : v
       );
-      dispatch(setOrder({ variants: variants }));
+      dispatch(setOrder({ variants: updated }));
       return updated;
     });
   };

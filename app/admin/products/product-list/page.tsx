@@ -24,7 +24,7 @@ function AdminProductList() {
     setSelectProduct(rowData);
     setOpen(true);
   };
-
+  console.log(data);
   const renderColors = (rowData: any) => {
     return rowData.productVariants?.map((item: any, index: number) => {
       const key = `${item.color}-${item.size}-${index}`; // benzersiz anahtar üretimi
@@ -32,9 +32,9 @@ function AdminProductList() {
         <div key={key} className="flex flex-col gap-2">
           <div className="flex gap-2">
             <span className="font-bold">Renk:</span>
-            <span>{item.color}</span>
+            <span>{item.color.name}</span>
             <span className="font-bold">Beden:</span>
-            <span>{item.size}</span>
+            <span>{item.size.name}</span>
             <span className="font-bold">Stok:</span>
             <span>{item.stock}</span>
           </div>
