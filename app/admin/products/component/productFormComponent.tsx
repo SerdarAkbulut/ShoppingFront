@@ -163,7 +163,7 @@ function ProductFormComponent({ product, mode = "add" }: ProductProps) {
           </Select>
         </FormControl>
 
-        <ProductVariantsTable />
+        <ProductVariantsTable productVariants={productVariants} />
         <Button
           component="label"
           variant="contained"

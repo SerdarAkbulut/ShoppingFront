@@ -10,7 +10,6 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { getColors, getSizes } from "app/hooks/products/useProducts";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "app/store/store";
 import { setOrder } from "app/store/order/orderSlice";
 
 interface Size {
@@ -29,12 +28,23 @@ interface Variant {
   stock: number;
 }
 
-const ProductVariantsTable: React.FC = () => {
+interface ProductVariantsTableProps {
+  productVariants?: any[];
+}
+
+const ProductVariantsTable: React.FC<ProductVariantsTableProps> = ({
+  productVariants,
+}) => {
   const { data: sizes } = getSizes();
   const { data: colors } = getColors();
-  const orderVariants = useSelector((state: RootState) => state.order.variants);
   const dispatch = useDispatch();
-  const [selectedSizes, setSelectedSizes] = useState<Size[]>([]);
+
+  // productVariants gelmese bile boş array kullan
+  const sizesOnly = Array.from(
+    new Map(productVariants?.map((v) => [v.size?.id, v.size]) || []).values()
+  );
+  console.log(productVariants, "productVariants");
+  const [selectedSizes, setSelectedSizes] = useState<Size[]>(sizesOnly);
   const [variants, setVariants] = useState<Variant[]>([]);
   const [expandedSizeId, setExpandedSizeId] = useState<number | null>(null);
 
@@ -45,62 +55,82 @@ const ProductVariantsTable: React.FC = () => {
         : [...prev, size]
     );
   };
+
+  // variants oluşturma
   useEffect(() => {
-    if (!colors || selectedSizes.length === 0) {
+    if (!colors?.length || !selectedSizes.length) {
       setVariants([]);
       return;
     }
 
     const newVariants: Variant[] = [];
+
     selectedSizes.forEach((size) => {
       colors.forEach((color: Color) => {
-        const existing = variants.find(
-          (v) => v.sizeId === size.id && v.colorId === color.id
+        const existing = productVariants?.find(
+          (v) => v.size?.id === size.id && v.color?.id === color.id
         );
         newVariants.push({
           sizeId: size.id,
           colorId: color.id,
-          stock: existing ? existing.stock : 0,
+          stock: existing?.stock || 0,
         });
       });
     });
 
-    setVariants(newVariants);
+    setVariants((prev) => {
+      const isEqual =
+        prev.length === newVariants.length &&
+        prev.every(
+          (v, i) =>
+            v.sizeId === newVariants[i].sizeId &&
+            v.colorId === newVariants[i].colorId &&
+            v.stock === newVariants[i].stock
+        );
+      return isEqual ? prev : newVariants;
+    });
   }, [selectedSizes, colors]);
+
   const handleStockChange = (
     sizeId: number,
     colorId: number,
     value: number
   ) => {
-    setVariants((prev) => {
-      const updated = prev.map((v) =>
+    setVariants((prev) =>
+      prev.map((v) =>
         v.sizeId === sizeId && v.colorId === colorId
           ? { ...v, stock: value }
           : v
-      );
-      dispatch(setOrder({ variants: updated }));
-      return updated;
-    });
+      )
+    );
   };
+
+  // Redux dispatch, variants değiştiğinde
+  useEffect(() => {
+    dispatch(setOrder({ variants }));
+  }, [variants, dispatch]);
 
   return (
     <>
+      {/* Size Checkbox */}
       <div className="flex gap-5 flex-wrap">
-        {sizes?.map((size: Size) => (
-          <label
-            key={size.id}
-            className="cursor-pointer flex items-center gap-2"
-          >
-            <input
-              type="checkbox"
-              checked={selectedSizes.some((s) => s.id === size.id)}
-              onChange={() => handleSizeToggle(size)}
-            />
-            {size.name}
-          </label>
-        ))}
+        {sizes?.length > 0 &&
+          sizes.map((size: Size) => (
+            <label
+              key={size.id}
+              className="cursor-pointer flex items-center gap-2"
+            >
+              <input
+                type="checkbox"
+                checked={selectedSizes.some((s) => s.id === size.id)}
+                onChange={() => handleSizeToggle(size)}
+              />
+              {size.name}
+            </label>
+          ))}
       </div>
 
+      {/* Variants Table */}
       <div style={{ padding: 20 }}>
         {selectedSizes.length > 0 && variants.length > 0 && (
           <Paper style={{ marginTop: 20, padding: 10 }}>
@@ -139,6 +169,7 @@ const ProductVariantsTable: React.FC = () => {
                           <TextField
                             size="small"
                             value={variant.stock}
+                            type="number"
                             onChange={(e) =>
                               handleStockChange(
                                 variant.sizeId,
